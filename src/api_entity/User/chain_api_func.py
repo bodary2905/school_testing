@@ -26,7 +26,8 @@ class UserChainApiFunc:
                          ):
         """Получаем header с token-ом авторизации"""
         # активируем получение token-а при
-        if auth_required or not role_credential.token:
+        token = role_credential.token
+        if auth_required or not token:
             # флаге auth_required или если пользователь еще не получил token
-            role_credential.token = UserChainApiFunc.get_token(role_credential)
-        return {"Authorization": role_credential.token}
+            token = UserChainApiFunc.get_token(role_credential)
+        return {"Authorization": token}
