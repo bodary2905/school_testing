@@ -24,36 +24,24 @@ class UserApiFunc:
         assert response.status_code == 200, f"Wrong status_code on {UserApiFunc.register.__name__} " \
                                             f"{entity_name}"
 
-    # TODO ДОДЕЛАТЬ
     @staticmethod
-    def confirmRegistration(body):
-        """Подтверждаем регистрацию нового User"""
-        response = send_post(url=UserFullPath.confirmRegistration, json=body)
-        assert response.status_code == 200, f"Wrong status_code on {UserApiFunc.confirmRegistration.__name__} " \
-                                            f"{entity_name}"
-
-    @staticmethod
-    def loginWithoutCaptcha(body):
-        """Логинимся без Captcha на сервер"""
-        response = send_post(url=UserFullPath.loginWithoutCaptcha, json=body)
-        assert response.status_code == 200, f"Wrong status_code on {entity_name}:loginWithoutCaptcha"
+    def login(body):
+        """Логинимся на сервер"""
+        response = send_post(url=UserFullPath.login, json=body)
+        assert response.status_code == 200, f"Wrong status_code on {entity_name}:login"
         body = get_response_body(response, err_msg=f"{entity_name}:loginWithoutCaptcha")
         # получаем umt_token
-        umt_token = dpath.get(body, _UserBodyPath.umt_token, separator='.')
+        token = dpath.get(body, _UserBodyPath.token, separator='.')
         # пока просто проверяем что token - ненулевая строка
-        assert isinstance(umt_token, str) and \
+        assert isinstance(token, str) and \
                len(umt_token) > 0, f"{entity_name} UMT token broken or don't exist"
-        return umt_token
+        return token
 
-    @staticmethod
-    def loginToService(body):
-        """Логинимся в конкретный сервис"""
-        response = send_post(url=UserFullPath.loginToService, json=body)
-        assert response.status_code == 200, f"Wrong status_code on {entity_name}:loginToService"
-        body = get_response_body(response, err_msg=f"{entity_name}:loginToService")
-        # получаем token_to_service
-        token_to_service = dpath.get(body, _UserBodyPath.token_to_service, separator='.')
-        # пока просто проверяем что token - ненулевая строка
-        assert isinstance(token_to_service, str) and \
-               len(token_to_service) > 0, f"{entity_name} token is broken or don't exist"
-        return token_to_service
+if __name__ == "__main__":
+    # для теста
+
+    body = {
+        "email_address": "test_1@mail.ru",
+        "password": "123456"
+    }
+    user_1 = UserApiFunc.register(body)
