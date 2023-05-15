@@ -4,10 +4,10 @@
 from enum import Enum
 from strenum import StrEnum
 
-import src.config
 from src.config import base_url
 from src.api_entity.api_path import VersionNumber
 from src.api_entity.User import entity_name
+
 
 # TODO все переделать
 class UserPath(StrEnum):
@@ -24,5 +24,5 @@ class UserFullPath(Enum):
 
 if __name__ == "__main__":
     # для теста
-    # print(UserFullPath.login.value)
+    print(UserFullPath.login.value)
     print(base_url)
