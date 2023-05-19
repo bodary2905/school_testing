@@ -2,7 +2,6 @@
     Функции для login-ов конкретный пользователей
 """
 from src.api_entity.User.chain_api_func import UserChainApiFunc
-from src.api_entity.api_path import ModuleName
 from tests.config import user1_credential
 
 

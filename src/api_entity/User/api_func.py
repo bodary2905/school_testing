@@ -21,7 +21,7 @@ class UserApiFunc:
     def register(body):
         """Регистрируем нового User"""
         response = send_post(url=UserFullPath.register, json=body)
-        assert response.status_code == 200, f"Wrong status_code on {UserApiFunc.register.__name__} " \
+        assert response.status_code == 201, f"Wrong status_code on {UserApiFunc.register.__name__} " \
                                             f"{entity_name}"
 
     @staticmethod
@@ -30,18 +30,21 @@ class UserApiFunc:
         response = send_post(url=UserFullPath.login, json=body)
         assert response.status_code == 200, f"Wrong status_code on {entity_name}:login"
         body = get_response_body(response, err_msg=f"{entity_name}:loginWithoutCaptcha")
-        # получаем umt_token
+        # получаем token
         token = dpath.get(body, _UserBodyPath.token, separator='.')
         # пока просто проверяем что token - ненулевая строка
         assert isinstance(token, str) and \
-               len(umt_token) > 0, f"{entity_name} UMT token broken or don't exist"
+               len(token) > 0, f"{entity_name} UMT token broken or don't exist"
         return token
 
 if __name__ == "__main__":
     # для теста
 
     body = {
-        "email_address": "test_1@mail.ru",
-        "password": "123456"
+        "username": "testuser_10",
+        "password": "testpassword_10"
     }
     user_1 = UserApiFunc.register(body)
+    token_1 = UserApiFunc.login(body)
+    print(user_1)
+    print(token_1)
