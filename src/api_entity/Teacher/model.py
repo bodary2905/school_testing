@@ -21,12 +21,10 @@ class TeacherModel_create_for_factory(BaseModel):
     # email_address: str = Field(..., description="электронная почта")
 
 
-class TeacherModel_create_for_response(BaseModel):
+class TeacherModel_create_for_response(TeacherModel_create_for_factory):
     """Модель для response"""
     staff_id: str = Field(..., description="id-к учителя")
-    first_name: constr(min_length=1, max_length=50) = Field(..., description="имя")
-    last_name: constr(min_length=1, max_length=50) = Field(..., description="фамилия")
-    email_address: EmailStr = Field(..., description="электронная почта")
+
     @validator("staff_id")
     def staff_id_check(cls, v:str):
         assert v.startswith("TC")
@@ -53,7 +51,6 @@ class TeacherModel_create_for_response(BaseModel):
 class TeacherModel_update_for_factory(BaseModel):
     first_name: Optional[constr(min_length=1, max_length=50)] = Field(description="имя")
     last_name: Optional[constr(min_length=1, max_length=50)] = Field(description="фамилия")
-    email_address: EmailStr = Field(description="электронная почта")
 
 class TeacherModel_get_for_response(TeacherModel_create_for_response):
     pass

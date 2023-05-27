@@ -25,16 +25,16 @@ class StudentModel_create_for_factory(BaseModel):
     minors: Optional[str] = Field(description="дополнительные предметы")
 
 
-    @validator("major_id")
-    def major_id_check(cls, v:str):
-        assert len(v.split(",")) == 1, "Более одного основного предмета"
-        assert v.startswith("SB"), "major_id начинается не с SB"
-        try:
-            v_list = v.split("SB")
-            v_int = int(v_list[1])
-        except ValueError as e:
-            raise ValueError(f"Error in func TeacherModel_create:major_id") from e
-        return v
+    # @validator("major_id")
+    # def major_id_check(cls, v:str):
+    #     assert len(v.split(",")) == 1, "Более одного основного предмета"
+    #     assert v.startswith("SB"), "major_id начинается не с SB"
+    #     try:
+    #         v_list = v.split("SB")
+    #         v_int = int(v_list[1])
+    #     except ValueError as e:
+    #         raise ValueError(f"Error in func TeacherModel_create:major_id") from e
+    #     return v
 
     # @validator("minors")
     # def minors_check(cls, v:str):
@@ -49,12 +49,9 @@ class StudentModel_create_for_factory(BaseModel):
     #         assert v.startswith("SB"), "minor_id начинается не с SB"
     #     return v
 
-class StudentModel_create_for_response(BaseModel):
+class StudentModel_create_for_response(StudentModel_create_for_factory):
     """Модель для response"""
     student_id: str = Field(..., description="id-к студента")
-    first_name: constr(min_length=1, max_length=50) = Field(..., description="имя")
-    last_name: constr(min_length=1, max_length=50) = Field(..., description="фамилия")
-    email_address: EmailStr = Field(..., description="электронная почта")
     major: Optional[dict] = Field(description="основной предмет")
     minors: Optional[list] = Field(description="дополнительные предметы")
 
@@ -65,7 +62,7 @@ class StudentModel_create_for_response(BaseModel):
             StudentModel_create_for_response._validate_major(v)
         except ValueError as e:
             raise ValueError(
-                f"Error in func StudentModel_create_for_factory:major_is_dict" +
+                f"Error in func StudentModel_create_for_response:major_is_dict" +
                 f"Ошибка при валидации типа поля major. Исходное значение: {v}"
             ) from e
         return v
