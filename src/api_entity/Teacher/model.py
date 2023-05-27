@@ -20,20 +20,7 @@ class TeacherModel_create_for_factory(BaseModel):
     # email_address: constr(regex=r"[\w.-]+@[\w-]+\.[\w.]+") = Field(..., description="электронная почта")
     # email_address: str = Field(..., description="электронная почта")
 
-    # @validator("email_address")
-    # def email_address_check(cls, v: str):
-    #     if len(v) > 255:
-    #          raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
-    #     if len(v) > 129:
-    #             if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
-    #                 # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
-    #                 raise ValueError(f"Email is invalid")
-    #     else:
-    #         try:
-    #             validate_email(v, check_deliverability=False)
-    #         except EmailNotValidError as e:
-    #             print(str(e))
-    #     return v
+
 class TeacherModel_create_for_response(BaseModel):
     """Модель для response"""
     staff_id: str = Field(..., description="id-к учителя")
@@ -49,7 +36,20 @@ class TeacherModel_create_for_response(BaseModel):
         except ValueError as e:
             raise ValueError(f"Error in func TeacherModel_create:staff_id") from e
         return v
-
+    @validator("email_address")
+    def email_address_check(cls, v: str):
+        if len(v) > 255:
+             raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
+        if len(v) > 129:
+                if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
+                    # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
+                    raise ValueError(f"Email is invalid")
+        else:
+            try:
+                validate_email(v, check_deliverability=False)
+            except EmailNotValidError as e:
+                print(str(e))
+        return v
 class TeacherModel_update_for_factory(BaseModel):
     first_name: Optional[constr(min_length=1, max_length=50)] = Field(description="имя")
     last_name: Optional[constr(min_length=1, max_length=50)] = Field(description="фамилия")
