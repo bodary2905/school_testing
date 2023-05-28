@@ -63,7 +63,7 @@ class SubjectModel_create_for_response(BaseModel):
             raise ValueError(f"Error in func SubjectModel_create_for_response:subject_id") from e
         return v
 
-class SubjectsModel_update_for_factory(BaseModel):
+class SubjectModel_update_for_factory(BaseModel):
     """Модель для response"""
     name: Optional[constr(min_length=1, max_length=50)] = Field(description="название предмета")
     teacher_id: Optional[str] = Field(description="id-к учителя")
