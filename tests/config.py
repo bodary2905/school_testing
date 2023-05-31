@@ -12,7 +12,7 @@ from src.api_entity.const import UserCredential
 # учетные данные для User1
 # создаем экземпляр класса UserCredential
 user1_credential = UserCredential(
-    email=os.getenv(EnvName.USER1_EMAIL), # email = "eqywo@mailto.plus"
+    name=os.getenv(EnvName.USER1_NAME), # email = "eqywo@mailto.plus"
     password=os.getenv(EnvName.USER1_PASSWORD),
 )
 
@@ -20,4 +20,4 @@ user1_credential = UserCredential(
 if __name__ == "__main__":
     # для теста
 
-    print(user1_credential.email)
+    print(user1_credential.name)

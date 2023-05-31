@@ -25,7 +25,7 @@ class StudentFullPath(Enum):
 
 if __name__ == "__main__":
     # для теста
-    print(StudentFullPath.create.value)
+    print(StudentFullPath.create.value) # так как тип Enum для получения значения необходимо писать .get.value
     print(StudentFullPath.get.value)
     print(StudentFullPath.getItems.value)
     print(StudentFullPath.put.value)

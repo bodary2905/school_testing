@@ -34,14 +34,16 @@ class UserApiFunc:
         token = dpath.get(body, _UserBodyPath.token, separator='.')
         # пока просто проверяем что token - ненулевая строка
         assert isinstance(token, str) and \
-               len(umt_token) > 0, f"{entity_name} UMT token broken or don't exist"
+               len(token) > 0, f"{entity_name} UMT token broken or don't exist"
         return token
 
 if __name__ == "__main__":
     # для теста
 
     body = {
-        "email_address": "test_1@mail.ru",
-        "password": "123456"
+        "username": "testuser_1",
+        "password": "testpassword_1"
     }
-    user_1 = UserApiFunc.register(body)
+    user_1 = UserApiFunc.login(body)
+    print(user_1)
+    pass

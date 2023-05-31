@@ -12,7 +12,7 @@ class UserChainApiFunc:
         """Получаем header для авторизации для пользователя 'role_credential'"""
         # формируем body для loginWithoutCaptcha
         body = {
-            "email_address": role_credential.email,
+            "username": role_credential.name,
             "password": role_credential.password,
         }
         # получаем umt token

@@ -11,9 +11,10 @@ class StudentFactory_create(BaseParams, ModelFactory):
     __model__ = StudentModel_create_for_factory
     schema: ClassVar[dict] = StudentModel_create_for_factory.schema()
 
+    # TODO подумать стоит ли указывать необязательные поля таким образом?
     # поля
-    major_id = Require()
-    minors = Require()
+    # major_id = Require()
+    # minors = Require()
 
     # генерируем данные с помощью faker
     @classmethod
@@ -46,9 +47,9 @@ class StudentFactory_update(BaseParams, ModelFactory):
 
 if __name__ == "__main__":
     # для теста
-    student_1 = StudentFactory_create.build(major_id="SB12", minors="SB2")
+    student_1 = StudentFactory_create.build(major_id="SB5", minors="SB6")
     print(student_1.dict())
-    student_1_upd = StudentFactory_update.build(major_id="SB3", minors="SB4")
+    student_1_upd = StudentFactory_update.build(major_id="SB7", minors="SB8")
     print(student_1_upd.dict())
 
 
