@@ -12,5 +12,5 @@ class EnvName(StrEnum):
     BASE_URL = auto()
     API_URL = auto()
     # user1 credentials
-    USER1_EMAIL = auto()
+    USER1_NAME = auto()
     USER1_PASSWORD = auto()
