@@ -30,4 +30,7 @@ with open("tokens.json", "r") as file:
             assert student["last_name"] == body["last_name"], "request last_name is NOT equal to response last_name"
 
 if __name__ == "__main__":
-    pass
+    import os
+
+    filename = os.path.basename(__file__)
+    print(f"{filename} worked success!")

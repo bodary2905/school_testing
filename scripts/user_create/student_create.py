@@ -34,4 +34,7 @@ with open("student_ids.json", "w") as file:
     file.write(student_id_json)  # записываем в файл словарь json
 
 if __name__ == "__main__":
-    pass
+    import os
+
+    filename = os.path.basename(__file__)
+    print(f"{filename} worked success!")
