@@ -1,0 +1,27 @@
+{
+  "student1": {
+    "first_name": "student_name_1",
+    "last_name": "student_last_name_1",
+    "email_address": "student_1@mail.ru"
+  },
+  "student2": {
+    "first_name": "student_name_2",
+    "last_name": "student_last_name_2",
+    "email_address": "student_2@mail.ru"
+  },
+  "student3": {
+    "first_name": "student_name_3",
+    "last_name": "student_last_name_3",
+    "email_address": "student_3@mail.ru"
+  },
+  "student4": {
+    "first_name": "student_name_4",
+    "last_name": "student_last_name_4",
+    "email_address": "student_4@mail.ru"
+  },
+  "student5": {
+    "first_name": "student_name_5",
+    "last_name": "student_last_name_5",
+    "email_address": "student_5@mail.ru"
+  }
+}
