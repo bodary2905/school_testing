@@ -11,12 +11,12 @@ with open("users.json", "r") as file:
     # получаем словарь с юзерами
     users = json.load(file)
     # через цикл for логинем user-ов
-    for user in users:
-        response = requests.post(api_url, json=users[user])
+    for user in users.values():
+        response = requests.post(api_url, json=user)
         assert response.status_code == 200, "Wrong status_code during login"
         body = response.json()  # получаем ответ в виде json
         tokens.append(f"{body['token']}")  # добавляем токены в список
-        usernames.append(users[user]["username"])
+        usernames.append(user["username"])  # добавляем юзеров в список
 
 token_dict = {}
 with open("tokens.json", "w") as file:
