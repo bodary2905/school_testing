@@ -19,6 +19,10 @@ with open("tokens.json", "r") as file:
             response = requests.post(api_url, json=student, headers=auth)
             assert response.status_code == 201, "Wrong status_code during create_student"
             body = response.json()
+            assert student["first_name"] == body["first_name"], "request first_name is NOT equal to response first_name"
+            assert student["last_name"] == body["last_name"], "request last_name is NOT equal to response last_name"
+            assert student["email_address"] == body[
+                "email_address"], "request email_address is NOT equal to response email_address"
             student_ids.append(body["student_id"])
             email_addresses.append(body["email_address"])
 
