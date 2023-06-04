@@ -3,7 +3,7 @@ import json
 
 api_url = "http://127.0.0.1:5000/api/v1/auth/register"
 # открываем json-файл
-with open("users.json", "r") as file:
+with open("json_files/users.json", "r") as file:
     # получаем словарь с юзерами
     users = json.load(file)
     # через цикл for создаем user-ов

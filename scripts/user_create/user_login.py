@@ -7,7 +7,7 @@ usernames = []
 tokens = []
 
 # открываем json-файл
-with open("users.json", "r") as file:
+with open("json_files/users.json", "r") as file:
     # получаем словарь с юзерами
     users = json.load(file)
     # через цикл for логинем user-ов
@@ -19,7 +19,7 @@ with open("users.json", "r") as file:
         usernames.append(user["username"])  # добавляем юзеров в список
 
 token_dict = {}
-with open("tokens.json", "w") as file:
+with open("json_files/tokens.json", "w") as file:
     for username, token in zip(usernames, tokens):
         token_dict[username] = token  # заполняем словарь
     token_json = json.dumps(token_dict, indent=4)  # преобразуем словарь в json с отступом=4
