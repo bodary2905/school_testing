@@ -14,7 +14,7 @@ with open("tokens.json", "r") as file:
     with open("students_update.json", "r") as file:
         response = requests.get(api_url, headers=auth)
         # проверяем статус код
-        assert response.status_code == 200, "Wrong status_code during student_get"
+        assert response.status_code == 200, "Wrong status_code during student_getItems"
         body = response.json()
         print(body)
 
