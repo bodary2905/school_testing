@@ -5,19 +5,19 @@ import random
 api_url = "http://127.0.0.1:5000/api/v1/students"
 
 student_ids = []
-with open("student_ids.json", "r") as file2:
+with open("json_files/student_ids.json", "r") as file2:
     ids = json.load(file2)
     for id in ids.values():
         student_ids.append(id)  # записываем id-ки студентов в список
 
-with open("tokens.json", "r") as file:
+with open("json_files/tokens.json", "r") as file:
     # получаем словарь с токенами
     tokens = json.load(file)
     # получаем случайный токен из словаря tokens
     token = random.choice(list(tokens.values()))
     # формируем хэдере авторизации
     auth = {"Authorization": token}
-    with open("students_update.json", "r") as file:
+    with open("json_files/students_update.json", "r") as file:
         for student_id in student_ids:
             response = requests.delete(f"{api_url}/{student_id}", headers=auth)
             # проверяем статус код
