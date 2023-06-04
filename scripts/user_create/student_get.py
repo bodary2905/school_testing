@@ -18,15 +18,13 @@ with open("tokens.json", "r") as file:
     # формируем хэдере авторизации
     auth = {"Authorization": token}
     with open("students_update.json", "r") as file:
-        students_update = json.load(file)
-        for student, student_id in zip(students_update.values(), student_ids):
-            response = requests.put(f"{api_url}/{student_id}", json=student, headers=auth)
+        for student_id in student_ids:
+            url = f"{api_url}/{student_id}"
+            response = requests.get(url, headers=auth)
             # проверяем статус код
-            assert response.status_code == 200, "Wrong status_code during student_update"
+            assert response.status_code == 200, "Wrong status_code during student_get"
             body = response.json()
-            # сравниваем значения отправленные на сервер с полученными значениями
-            assert student["first_name"] == body["first_name"], "request first_name is NOT equal to response first_name"
-            assert student["last_name"] == body["last_name"], "request last_name is NOT equal to response last_name"
+            print(body)
 
 if __name__ == "__main__":
     import os
