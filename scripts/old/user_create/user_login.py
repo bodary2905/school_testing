@@ -4,8 +4,8 @@ import json
 
 # a = os.getcwd()
 # b = os.path.dirname(a)
-# # c = os.path.join(os.getcwd(), "user_create", "users.json")
-# d = os.path.join(b, "user_create", "users.json")
+# # c = os.path.join(os.getcwd(), "user", "users.json")
+# d = os.path.join(b, "user", "users.json")
 #
 # print(a)
 # print(b)
