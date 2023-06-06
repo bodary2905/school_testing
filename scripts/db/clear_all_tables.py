@@ -12,7 +12,7 @@ items = [
 if __name__ == "__main__":
     import os
     # для всех скриптов с os.getenv делаем импорт конфигов
-    from src import config  # для всех скриптов с os.getenv делаем импорт конфигов
+    from src import config
 
     db_credential = (
         os.getenv("DB_NAME"),

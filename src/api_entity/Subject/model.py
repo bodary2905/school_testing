@@ -17,14 +17,14 @@ from src.api_entity.Teacher.model import TeacherModel_create_for_response
 
 
 class SubjectModel_create_for_factory(BaseModel):
-    """Модель для фабрики"""
+    """Модель создания для фабрики"""
     name: constr(min_length=1, max_length=50) = Field(..., description="название предмета")
     teacher_id: str = Field(..., description="id-к учителя")
     description: Optional[constr(min_length=0, max_length=150)] = Field(description="описание предмета")
 
 
 class SubjectModel_create_for_response(BaseModel):
-    """Модель для response"""
+    """Модель создания для ответа"""
     subject_id: str = Field(..., description="id-к предмета")
     name: constr(min_length=1, max_length=50) = Field(..., description="название предмета")
     description: Optional[constr(min_length=0, max_length=150)] = Field(description="описание предмета")
@@ -51,21 +51,24 @@ class SubjectModel_create_for_response(BaseModel):
 
 
 class SubjectModel_update_for_factory(BaseModel):
-    """Модель для response"""
+    """Модель изменения для фабрики"""
     name: Optional[constr(min_length=1, max_length=50)] = Field(description="название предмета")
     teacher_id: Optional[str] = Field(description="id-к учителя")
     description: Optional[constr(min_length=0, max_length=150)] = Field(description="описание предмета")
 
 
 class SubjectModel_update_for_response(SubjectModel_create_for_response):
+    """Модель изменения для ответа"""
     pass
 
 
 class SubjectModel_get_for_response(SubjectModel_create_for_response):
+    """Модель получения для ответа"""
     pass
 
 
 class SubjectModel_delete_for_response(BaseModel):
+    """Модель удаления для ответа"""
     message: str = Field(description="сообщение об успехе удаления")
 
     @validator("message")

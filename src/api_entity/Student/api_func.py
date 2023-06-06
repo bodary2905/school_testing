@@ -5,7 +5,7 @@ from src.http_func import send_post, send_put, send_get, send_delete
 from src.api_entity.Student.factory import StudentFactory_create, StudentFactory_update
 from src.api_entity.Student.model import StudentModel_create_for_factory, StudentModel_update_for_factory, \
     StudentModel_create_for_response, StudentModel_update_for_response, StudentModel_get_for_response, \
-    Student_delete_for_response
+    StudentModel_delete_for_response
 from src.api_entity.Student.api_path import StudentFullPath
 from src.api_entity.Student import entity_name
 
@@ -36,7 +36,7 @@ class StudentApiFunc:
     @staticmethod
     def update(student_id, body, **kwargs):
         response = send_put(url=StudentFullPath.put.value / student_id, json=body, **kwargs)
-        assert response.status_code == 200, f"Wrong statuse_code {entity_name}:get"
+        assert response.status_code == 200, f"Wrong statuse_code {entity_name}:update"
         body = get_response_body(response, err_msg=f"{entity_name}:update")
         # валидируем (создаем экземпляр модели)
         model = StudentModel_update_for_response.parse_obj(body)
@@ -48,7 +48,7 @@ class StudentApiFunc:
         assert response.status_code == 200, f"Wrong status_code {entity_name}:delete"
         body = get_response_body(response, err_msg=f"{entity_name}:delete")
         # валидируем (создаем экземпляр модели)
-        model = Student_delete_for_response.parse_obj(body)
+        model = StudentModel_delete_for_response.parse_obj(body)
         return body, model
 
 
