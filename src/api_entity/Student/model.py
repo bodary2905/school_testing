@@ -125,7 +125,7 @@ class StudentModel_get_for_response(StudentModel_create_for_response):
     pass
 
 
-class Student_delete_for_response(BaseModel):
+class StudentModel_delete_for_response(BaseModel):
     """Модель удаления для ответа"""
     message: str = Field(description="сообщение об успехе удаления")
 
@@ -180,5 +180,5 @@ if __name__ == "__main__":
     student_1 = StudentModel_create_for_response.parse_obj(body)
     print(student_1)
     body_2 = {"message": "You have successfully deleted the student with the following ID: ST793"}
-    del_student = Student_delete_for_response.parse_obj(body_2)
+    del_student = StudentModel_delete_for_response.parse_obj(body_2)
     pass
