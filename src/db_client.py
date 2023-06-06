@@ -8,6 +8,7 @@ from psycopg2 import OperationalError
 
 def create_connection(db_name, db_user, db_password, db_host, db_port):
     connection = None
+    # пытаемся подключиться к бд
     try:
         connection = psycopg2.connect(
             database=db_name,
@@ -22,17 +23,21 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
     return connection
 
 
+# Создадим функцию, которая возвращает результат запроса
 def execute_read_query(connection, query):
     try:
         with connection:
-            with connection.cursor() as cursor:
+            with connection.cursor() as cursor:  # cursor - класс для взаимодействия с бд
+                # С помощью метода execute объекта cursor
+                # можно выполнить любую операцию или запрос к базе данных
                 cursor.execute(query)
-                result = cursor.fetchall()
+                result = cursor.fetchall()  # получаем результат запроса с помощью fetchall()
                 return result
     except Exception as e:
         print(f"The error '{e}' occurred")
 
 
+# Создадим функцию БЕЗ возвращения результата запроса
 def execute_query(connection, query):
     try:
         with connection:
