@@ -7,7 +7,7 @@ from scripts.items.const import api_url
 # создаем пустой список для записи в него id-в студентов из файла
 student_ids = []
 # открываем json-файл, в котором хранятся id-ки созданных студентов
-with open("../json_files/student_ids.json", "r") as file2:
+with open("json_files/student_ids.json", "r") as file2:
     ids = json.load(file2)
     for id in ids.values():
         student_ids.append(id)  # записываем id-ки студентов в список
