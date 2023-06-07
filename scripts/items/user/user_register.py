@@ -10,7 +10,7 @@ import os
 with open("json_files/users.json", "r") as file:
     # получаем словарь с юзерами
     users = json.load(file)
-    # через цикл for регистрируем user-ов
+    # через цикл for регистрируем items-ов
     for user in users.values():
         response = requests.post(f"{api_url_auth}register", json=user)
         assert response.status_code == 201, "Wrong status_code during register"

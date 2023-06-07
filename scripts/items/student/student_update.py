@@ -2,19 +2,19 @@ import requests
 import json
 import random
 
-from const import api_url
+from scripts.items.const import api_url
 
 # создаем пустой список для записи в него id-в студентов из файла
 student_ids = []
 # открываем json-файл, в котором хранятся id-ки студентов
-with open("json_files/student_ids.json", "r") as file2:
+with open("../json_files/student_ids.json", "r") as file2:
     # получаем словарь с id-ми
     ids = json.load(file2)
     for id in ids.values():
         student_ids.append(id)  # записываем id-ки студентов в список
 
 # открываем json-файл с токенами
-with open("json_files/tokens.json", "r") as file:
+with open("../user/json_files/tokens.json", "r") as file:
     # получаем словарь с токенами
     tokens = json.load(file)
     # получаем случайный токен из словаря tokens
@@ -22,7 +22,7 @@ with open("json_files/tokens.json", "r") as file:
     # формируем хэдере авторизации
     auth = {"Authorization": token}
     # открываем json-файл с данными для изменения студентов
-    with open("json_files/students_update.json", "r") as file:
+    with open("../json_files/students_update.json", "r") as file:
         # получаем словарь с данными для изменения студентов
         students_update = json.load(file)
         # через цикл for изменяем студентов
