@@ -8,7 +8,6 @@ from scripts.items.const import api_url
 teacher_ids = []
 # открываем json-файл, в котором хранятся id-ки созданных студентов
 with open("json_files/teacher_ids.json", "r") as file2:
-    # получаем словарь с id-ми
     ids = json.load(file2)
     for id in ids.values():
         teacher_ids.append(id)  # записываем id-ки студентов в список
@@ -21,14 +20,14 @@ with open("../user/json_files/tokens.json", "r") as file:
     token = random.choice(list(tokens.values()))
     # формируем хэдере авторизации
     auth = {"Authorization": token}
-    # через цикл for просматриваем каждого студента
+    # через цикл for удаляем студентов
     for teacher_id in teacher_ids:
-        url = f"{api_url}teachers/{teacher_id}"
-        response = requests.get(url, headers=auth)
+        response = requests.delete(f"{api_url}teachers/{teacher_id}", headers=auth)
         # проверяем статус код
-        assert response.status_code == 200, f"Wrong status_code during teacher_get\nStatus code: {response.status_code}\nResponse: {response.text}"
+        assert response.status_code == 200, f"Wrong status_code during teacher_delete\nStatus code: {response.status_code}\nResponse: {response.text}"
         body = response.json()
-        print(body)
+        # проверяем сообщение об успехе удаления
+        assert "You have successfully deleted the teacher with the following ID: TC" in body["message"]
 
 if __name__ == "__main__":
     import os
