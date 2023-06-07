@@ -85,7 +85,8 @@ class StudentModel_create_for_response(BaseModel):
                     except ValueError as e:
                         raise ValueError(f"Error in func StudentModel_create_for_factory:minors for teacher") from e
         else:
-            return f"{v} список с минорными предметами пуст"
+            print(f"{v} список с минорными предметами пуст")
+        return v
 
     # @validator('major', pre=True)
     # def check_teacher_dict(cls, v):

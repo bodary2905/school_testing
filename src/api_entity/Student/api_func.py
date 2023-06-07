@@ -36,7 +36,7 @@ class StudentApiFunc:
     @staticmethod
     def update(student_id, body, **kwargs):
         response = send_put(url=StudentFullPath.put.value / student_id, json=body, **kwargs)
-        assert response.status_code == 200, f"Wrong statuse_code {entity_name}:update"
+        assert response.status_code == 200, f"Wrong statuse_code {entity_name}:update\nResponse:{response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:update")
         # валидируем (создаем экземпляр модели)
         model = StudentModel_update_for_response.parse_obj(body)
@@ -45,7 +45,7 @@ class StudentApiFunc:
     @staticmethod
     def delete(student_id, **kwargs):
         response = send_delete(url=StudentFullPath.delete.value / student_id, **kwargs)
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:delete"
+        assert response.status_code == 200, f"Wrong status_code {entity_name}:delete\nResponse:{response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:delete")
         # валидируем (создаем экземпляр модели)
         model = StudentModel_delete_for_response.parse_obj(body)
@@ -60,7 +60,10 @@ if __name__ == "__main__":
     auth = get_auth_header_user1()
     # CREATE
     # создаем студента с помощью фабрики (экземпляр модели фабрики)
-    student_factory_create = StudentFactory_create.build(major_id="SB210", minors="SB412, SB757")
+    minor_id_1 = "SB134"
+    minor_id_2 = "SB410"
+    minor_ids = [minor_id_1, minor_id_2]
+    student_factory_create = StudentFactory_create.build(major_id="SB489", minors=f"{minor_id_1}, {minor_id_2}")
     # создаем студента с помощью api_func через метод create
     student_create, student_model_create = StudentApiFunc.create(student_factory_create.dict(),
                                                                  headers=auth)  # create возвращает body и model
@@ -76,11 +79,19 @@ if __name__ == "__main__":
     assert student_factory_create.email_address == student_model_get_create.email_address, f"email_address фабрики НЕ равно email_address модели для create"
     assert student_factory_create.major_id == student_model_get_create.major[
         "subject_id"], "major_id фабрики НЕ равно major модели для create"
-    # assert student_factory_create.minors ==
-    # TODO сделать модель для поля minors для сравнения?
+    # проверка для поля minors
+    # достаем id-ки предметов
+    subject_ids = []
+    for minor in student_model_get_create.minors:
+        subject_ids.append(minor["subject_id"])
+    # сортируем списки с отправленными и полученными minors
+    minor_ids.sort()
+    subject_ids.sort()
+    # сравниваем отправленные minors с полученными minors
+    assert minor_ids == subject_ids
     # UPDATE
     # создаем экземпляр модели фабрики для update
-    student_factory_update = StudentFactory_update.build(major_id="SB757", minors="SB94")
+    student_factory_update = StudentFactory_update.build(major_id="SB489", minors="SB410")
     # изменяем данные студента с помощью api_func через метод update
     student_update, student_model_update = StudentApiFunc.update(student_id=student_id_create,
                                                                  body=student_factory_update.dict(),
