@@ -21,7 +21,7 @@ with open("../user/json_files/tokens.json", "r") as file:
     # формируем хэдере авторизации
     auth = {"Authorization": token}
     # открываем json-файл со  студентами
-    with open("../json_files/students.json", "r") as file2:
+    with open("json_files/students.json", "r") as file2:
         # получаем словарь с токенами
         students = json.load(file2)
         # через цикл for создаем студентов
@@ -41,7 +41,7 @@ with open("../user/json_files/tokens.json", "r") as file:
 # создаем пустой словарь для записи в него email-в и id-в студентов
 student_id_dict = {}
 # открываем пустой json-файл для записи email-в и id-в студентов
-with open("../json_files/student_ids.json", "w") as file:
+with open("json_files/student_ids.json", "w") as file:
     # через цикл for заполняем словарь student_id_dict
     for email_address, student_id in zip(email_addresses, student_ids):
         student_id_dict[email_address] = student_id  # заполняем словарь
