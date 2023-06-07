@@ -13,8 +13,8 @@ StrEnum = "^0.4.10"
 pydantic-factories = "^1.17.2"
 python-dotenv = "^1.0.0"
 dpath = "^2.1.5"
-psycopg2 = "^2.9.6" # для Windows
-#psycopg2-binary = "^2.9.6" # для Linux
+#psycopg2 = "^2.9.6" # для Windows
+psycopg2-binary = "^2.9.6" # для Linux
 
 [tool.poetry.dev-dependencies]
 
