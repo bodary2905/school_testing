@@ -1,0 +1,27 @@
+{
+  "teacher1": {
+    "first_name": "teacher_name_1",
+    "last_name": "teacher_last_name_1",
+    "email_address": "teacher_1@mail.ru"
+  },
+  "teacher2": {
+    "first_name": "teacher_name_2",
+    "last_name": "teacher_last_name_2",
+    "email_address": "teacher_2@mail.ru"
+  },
+  "teacher3": {
+    "first_name": "teacher_name_3",
+    "last_name": "teacher_last_name_3",
+    "email_address": "teacher_3@mail.ru"
+  },
+  "teacher4": {
+    "first_name": "teacher_name_4",
+    "last_name": "teacher_last_name_4",
+    "email_address": "teacher_4@mail.ru"
+  },
+  "teacher5": {
+    "first_name": "teacher_name_5",
+    "last_name": "teacher_last_name_5",
+    "email_address": "teacher_5@mail.ru"
+  }
+}

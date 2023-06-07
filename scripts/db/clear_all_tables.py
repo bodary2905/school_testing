@@ -3,9 +3,9 @@ from src.db_client import create_connection, execute_query
 items = [
     "users",
     "students",
-    "person",
-    "teachers",
+    "person",  # удалять при удалении students и teachers
     "subjects",
+    "teachers",
     "student_subject"
 ]
 
