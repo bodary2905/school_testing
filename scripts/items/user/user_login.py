@@ -11,7 +11,7 @@ tokens = []
 with open("json_files/users.json", "r") as file:
     # получаем словарь с юзерами
     users = json.load(file)
-    # через цикл for логинем user-ов
+    # через цикл for логинем items-ов
     for user in users.values():
         response = requests.post(f"{api_url_auth}login", json=user)
         assert response.status_code == 200, "Wrong status_code during login"

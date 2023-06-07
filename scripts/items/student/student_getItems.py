@@ -2,10 +2,10 @@ import requests
 import json
 import random
 
-from const import api_url
+from scripts.items.const import api_url
 
 # открываем json-файл с токенами юзеров
-with open("json_files/tokens.json", "r") as file:
+with open("../user/json_files/tokens.json", "r") as file:
     # получаем словарь с токенами
     tokens = json.load(file)
     # получаем случайный токен из словаря tokens
