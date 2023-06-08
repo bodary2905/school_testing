@@ -1,0 +1,22 @@
+{
+  "subject1": {
+    "name": "subject1",
+    "description": "description_1"
+  },
+  "subject2": {
+    "name": "subject2",
+    "description": "description_2"
+  },
+  "subject3": {
+    "name": "subject3",
+    "description": "description_3"
+  },
+  "subject4": {
+    "name": "subject4",
+    "description": "description_4"
+  },
+  "subject5": {
+    "name": "subject5",
+    "description": "description_5"
+  }
+}
