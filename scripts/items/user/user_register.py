@@ -1,7 +1,7 @@
 import requests
 import json
 
-from const import api_url_auth
+from scripts.items.const import api_url_auth
 from src.db_client import create_connection, execute_read_query
 from src import config
 import os

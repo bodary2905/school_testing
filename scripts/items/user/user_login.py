@@ -1,7 +1,7 @@
 import requests
 import json
 
-from const import api_url_auth
+from scripts.items.const import api_url_auth
 
 # создаем пустые списки для записи в них имен и токенов юзеров
 usernames = []
