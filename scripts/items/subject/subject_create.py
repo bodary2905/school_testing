@@ -21,7 +21,6 @@ with open("../teacher/json_files/teacher_ids.json", "r") as file:
     # с помощью цикла for записываем id-ки учителей
     for id in ids.values():
         teacher_ids.append(id)
-print(teacher_ids)
 
 # открываем json-файл с токенами
 with open("../user/json_files/tokens.json", "r") as file:
