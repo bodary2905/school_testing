@@ -81,6 +81,6 @@ if __name__ == "__main__":
         "staff_id": "TC123"
     }
     body_2 = {"message": "You have successfully deleted the teacher with the following ID: TC"}
-    response = TeacherModel_delete_for_response.parse_obj(body_2)
+    response = TeacherModel_create_for_factory.parse_obj(body)
     print(response)
     pass
