@@ -32,7 +32,7 @@ with open("json_files/tokens.json", "w") as file:
 if __name__ == "__main__":
     import os
 
-    # получаем имя файла user_login.py по указанному пути
+    # получаем имя текущего .py файла по указанному пути
     filename = os.path.basename(__file__)
     # выводим сообщение об успехе
     print(f"{filename} worked success!")

@@ -18,7 +18,7 @@ with open("../user/json_files/tokens.json", "r") as file:
     tokens = json.load(file)
     # получаем случайный токен из словаря tokens
     token = random.choice(list(tokens.values()))
-    # формируем хэдере авторизации
+    # формируем хэдер авторизации
     auth = {"Authorization": token}
     # открываем json-файл со  студентами
     with open("json_files/teachers.json", "r") as file2:
@@ -51,7 +51,7 @@ with open("json_files/teacher_ids.json", "w") as file:
 if __name__ == "__main__":
     import os
 
-    # получаем имя файла user_register.py по указанному пути
+    # получаем имя текущего .py файла по указанному пути
     filename = os.path.basename(__file__)
     # выводим сообщение об успехе
     print(f"{filename} worked success!")
