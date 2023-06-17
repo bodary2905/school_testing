@@ -7,10 +7,6 @@ from __future__ import annotations
 import typing
 from typing import Literal, Optional, ClassVar, Union, List, Dict
 from pydantic import Field, constr, Extra, validator, ValidationError, validate_arguments, EmailStr
-from pydantic.types import Json
-from email_validator import validate_email, EmailNotValidError
-import re
-import random
 
 from src.api_entity.model import BaseModel
 from src.api_entity.Teacher.model import TeacherModel_create_for_response
@@ -123,6 +119,7 @@ class StudentModel_update_for_response(StudentModel_create_for_response):
 
 class StudentModel_get_for_response(StudentModel_create_for_response):
     """Модель получения для ответа"""
+    # TODO перенести сюда закомментированные validators из StudentModel_create_for_response
     pass
 
 

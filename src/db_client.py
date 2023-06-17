@@ -5,10 +5,14 @@
 import psycopg2
 from psycopg2 import OperationalError
 
+from src.const import EnvName
+
 
 def create_connection(db_name, db_user, db_password, db_host, db_port):
+    """Создаем connection к Postgress"""
     connection = None
     # пытаемся подключиться к бд
+    # TODO отрефакторить
     try:
         connection = psycopg2.connect(
             database=db_name,
@@ -19,12 +23,14 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
         )
         print("Connection to PostgreSQL DB successful")
     except OperationalError as e:
+        # TODO подумать нужно ли пробрасывать ошибку дальше
         print(f"The error '{e}' occurred")
     return connection
 
 
 # Создадим функцию, которая возвращает результат запроса
 def execute_read_query(connection, query):
+    """Послылаем SQL запрос и ждем ответ от БД"""
     try:
         with connection:
             with connection.cursor() as cursor:  # cursor - класс для взаимодействия с бд
@@ -34,29 +40,33 @@ def execute_read_query(connection, query):
                 result = cursor.fetchall()  # получаем результат запроса с помощью fetchall()
                 return result
     except Exception as e:
+        # TODO подумать нужно ли пробрасывать ошибку дальше
         print(f"The error '{e}' occurred")
 
 
 # Создадим функцию БЕЗ возвращения результата запроса
 def execute_query(connection, query):
+    """Послылаем SQL запрос и НЕ ждем ответ от БД"""
     try:
         with connection:
             with connection.cursor() as cursor:
                 cursor.execute(query)
     except Exception as e:
+        # TODO подумать нужно ли пробрасывать ошибку дальше
         print(f"The error '{e}' occurred")
 
 
 if __name__ == "__main__":
+    # для теста
     import os
     from src import config
 
     db_credential = (
-        os.getenv("DB_NAME"),
-        os.getenv("DB_USER"),
-        os.getenv("DB_PASSWORD"),
-        os.getenv("DB_HOST"),
-        int(os.getenv("DB_PORT"))
+        os.getenv(EnvName.DB_NAME),
+        os.getenv(EnvName.DB_USER),
+        os.getenv(EnvName.DB_PASSWORD),
+        os.getenv(EnvName.DB_HOST),
+        int(os.getenv(EnvName.DB_PORT))
     )
     connection = create_connection(*db_credential)
     connection.set_session(readonly=False, autocommit=True)

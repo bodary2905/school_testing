@@ -17,6 +17,7 @@ src_path = os.path.join(curr_dir,
                         '..')  # перемещяемся вверх на одну папку /home/pcuser/PycharmProjects/school_testing/src/..
 
 # в зависимости от окружения загружаем нужный нам файл с .env
+# по умолчанию загружаем окружение "development"
 _ENVIRONMENT_NAME = os.getenv("ENVIRONMENT_NAME") or "development"
 load_dotenv(f"{src_path}/env_folder/{_ENVIRONMENT_NAME}/.env")
 

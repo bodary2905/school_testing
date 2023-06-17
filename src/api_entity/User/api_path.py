@@ -9,7 +9,6 @@ from src.api_entity.api_path import VersionNumber
 from src.api_entity.User import entity_name
 
 
-# TODO все переделать
 class UserPath(StrEnum):
     """Локальные пути"""
     register = f"{entity_name}/register"
