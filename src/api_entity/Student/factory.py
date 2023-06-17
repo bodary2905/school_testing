@@ -6,15 +6,11 @@ from src.api_entity import schema_func
 from src.api_entity.Student.model import StudentModel_create_for_factory, StudentModel_update_for_factory
 from src.api_entity.factory import BaseParams, faker
 
+
 class StudentFactory_create(BaseParams, ModelFactory):
     """Базовая фабрика - для CREATE запроса и для сравнения"""
     __model__ = StudentModel_create_for_factory
     schema: ClassVar[dict] = StudentModel_create_for_factory.schema()
-
-    # TODO подумать стоит ли указывать необязательные поля таким образом?
-    # поля
-    # major_id = Require()
-    # minors = Require()
 
     # генерируем данные с помощью faker
     @classmethod
@@ -22,28 +18,35 @@ class StudentFactory_create(BaseParams, ModelFactory):
         # получаем ограничения для поля из json-схемы
         max_length = schema_func.get_field_maxLength("first_name", cls.schema)
         return cls.__faker__.first_name()[:max_length]
+
     @classmethod
     def last_name(cls) -> str:
         # получаем ограничения для поля из json-схемы
         max_length = schema_func.get_field_maxLength("last_name", cls.schema)
         return cls.__faker__.last_name()[:max_length]
+
     @classmethod
     def email_address(cls) -> str:
         # получаем ограничения для поля из json-схемы
         return cls.__faker__.unique.email()
+
+
 class StudentFactory_update(BaseParams, ModelFactory):
     __model__ = StudentModel_update_for_factory
     schema: ClassVar[dict] = StudentModel_update_for_factory.schema()
+
     @classmethod
     def first_name(cls) -> str:
         # получаем ограничения для поля из json-схемы
         max_length = schema_func.get_field_maxLength("first_name", cls.schema)
         return cls.__faker__.first_name()[:max_length]
+
     @classmethod
     def last_name(cls) -> str:
         # получаем ограничения для поля из json-схемы
         max_length = schema_func.get_field_maxLength("last_name", cls.schema)
         return cls.__faker__.last_name()[:max_length]
+
 
 if __name__ == "__main__":
     # для теста
@@ -51,5 +54,3 @@ if __name__ == "__main__":
     print(student_1.dict())
     student_1_upd = StudentFactory_update.build(major_id="SB7", minors="SB8")
     print(student_1_upd.dict())
-
-

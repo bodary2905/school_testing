@@ -4,7 +4,7 @@
 from strenum import StrEnum
 from enum import auto
 
-# TODO переделать в VersionNumber
+
 class VersionNumber(StrEnum):
     """Номер версии"""
     v1 = auto()

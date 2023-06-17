@@ -9,14 +9,13 @@ from src.http_func import send_post, send_put, send_get
 from src.api_entity.User.api_path import UserFullPath
 from src.api_entity.User import entity_name
 
-# TODO все переделать
+
 class _UserBodyPath(StrEnum):
     """Константы с путями в body для User"""
     token = "token"
 
 
 class UserApiFunc:
-    # TODO ДОДЕЛАТЬ
     @staticmethod
     def register(body):
         """Регистрируем нового User"""
@@ -36,6 +35,7 @@ class UserApiFunc:
         assert isinstance(token, str) and \
                len(token) > 0, f"{entity_name} UMT token broken or don't exist"
         return token
+
 
 if __name__ == "__main__":
     # для теста
