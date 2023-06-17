@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     connection.close()
 
-    # получаем имя файла user_register.py по указанному пути
+    # получаем имя текущего .py файла по указанному пути
     filename = os.path.basename(__file__)
     # выводим сообщение об успехе
     print(f"{filename} worked success!")
