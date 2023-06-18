@@ -8,6 +8,7 @@ from src.config import base_url
 from src.api_entity.api_path import VersionNumber
 from src.api_entity.Teacher import entity_name
 
+
 class TeacherPath(StrEnum):
     """Локальные пути"""
     create = f"{entity_name}"
@@ -15,6 +16,8 @@ class TeacherPath(StrEnum):
     getItems = f"{entity_name}"
     put = f"{entity_name}"
     delete = f"{entity_name}"
+
+
 class TeacherFullPath(Enum):
     """Полные пути"""
     create = base_url / VersionNumber.v1 / TeacherPath.create
@@ -23,6 +26,7 @@ class TeacherFullPath(Enum):
     put = base_url / VersionNumber.v1 / TeacherPath.put
     delete = base_url / VersionNumber.v1 / TeacherPath.delete
 
+
 if __name__ == "__main__":
     # для теста
     print(TeacherFullPath.create.value)
@@ -30,4 +34,3 @@ if __name__ == "__main__":
     print(TeacherFullPath.getItems.value)
     print(TeacherFullPath.put.value)
     print(TeacherFullPath.delete.value)
-
