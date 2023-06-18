@@ -29,7 +29,7 @@ def test_crud_teaher(user1_auth_hearders):
     teacher_get_create, teacher_model_get_create = TeacherApiFunc.get(teacher_id=teacher_id_create,
                                                                       headers=user1_auth_hearders)  # get возвращает body и model
     # сравниваем значения, отправленные на сервер с полученными значениями (фабрику и модель)
-    assert teacher_factory_create.first_name != teacher_model_get_create.first_name, f"first_name фабрики НЕ равно first_name модели для create"
+    assert teacher_factory_create.first_name == teacher_model_get_create.first_name, f"first_name фабрики НЕ равно first_name модели для create"
     assert teacher_factory_create.last_name == teacher_model_get_create.last_name, f"last_name фабрики НЕ равно last_name модели для create"
     assert teacher_factory_create.email_address == teacher_model_get_create.email_address, f"email_address фабрики НЕ равно email_address модели для create"
     # UPDATE
