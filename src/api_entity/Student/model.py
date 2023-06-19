@@ -7,6 +7,7 @@ from __future__ import annotations
 import typing
 from typing import Literal, Optional, ClassVar, Union, List, Dict
 from pydantic import Field, constr, Extra, validator, ValidationError, validate_arguments, EmailStr
+from email_validator import validate_email, EmailNotValidError
 
 from src.api_entity.model import BaseModel
 from src.api_entity.Teacher.model import TeacherModel_create_for_response
@@ -51,7 +52,7 @@ class StudentModel_create_for_response(BaseModel):
     student_id: str = Field(..., description="id-к студента")
     first_name: constr(min_length=1, max_length=50) = Field(..., description="имя")
     last_name: constr(min_length=1, max_length=50) = Field(..., description="фамилия")
-    email_address: EmailStr = Field(..., description="электронная почта")
+    email_address: str = Field(..., description="электронная почта")
     major: Optional[dict] = Field(description="основной предмет")
     minors: Optional[list] = Field(description="дополнительные предметы")
 
@@ -82,6 +83,17 @@ class StudentModel_create_for_response(BaseModel):
                         raise ValueError(f"Error in func StudentModel_create_for_factory:minors for teacher") from e
         else:
             print(f"{v} список с минорными предметами пуст")
+        return v
+
+    @validator("email_address")
+    def email_address_check(cls, v: str):
+        # 255 символов - ограничение по документации
+        if len(v) > 255:
+            raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
+        # через библиотеку validate_email поверяем валидность email-адреса
+        else:
+            validate_email(v,
+                           check_deliverability=False)  # check_deliverability: флаг, указывающий, нужно ли проверять возможность доставки email-сообщений на указанный адрес
         return v
 
     # @validator('major', pre=True)

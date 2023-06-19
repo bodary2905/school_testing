@@ -24,6 +24,8 @@ class TeacherModel_create_for_factory(BaseModel):
 class TeacherModel_create_for_response(TeacherModel_create_for_factory):
     """Модель для response"""
     staff_id: str = Field(..., description="id-к учителя")
+    # переопределяем поле email_address, чтобы не срабатывала проверка EmailStr (не пропускает 255 символов)
+    email_address: str = Field(..., description="электронная почта")
 
     @validator("staff_id")
     def staff_id_check(cls, v: str):
@@ -37,17 +39,18 @@ class TeacherModel_create_for_response(TeacherModel_create_for_factory):
 
     @validator("email_address")
     def email_address_check(cls, v: str):
+        # 255 символов - ограничение по документации
         if len(v) > 255:
             raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
-        if len(v) > 129:
-            if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
-                # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
-                raise ValueError(f"Email is invalid")
+        # от 130 до 255 проверяем email через регулярное выражение
+        # if len(v) > 129:
+        #     if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
+        #         # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
+        #         raise ValueError(f"Email is invalid")
+        # через библиотеку validate_email поверяем валидность email-адреса
         else:
-            try:
-                validate_email(v, check_deliverability=False)
-            except EmailNotValidError as e:
-                print(str(e))
+            validate_email(v,
+                           check_deliverability=False)  # check_deliverability: флаг, указывающий, нужно ли проверять возможность доставки email-сообщений на указанный адрес
         return v
 
 
@@ -77,10 +80,10 @@ if __name__ == "__main__":
     body = {
         "first_name": "teacher_name_1",
         "last_name": "teacher_last_name_1",
-        "email_address": "test@mail.ru",
+        "email_address": "post@mail.ru",
         "staff_id": "TC123"
     }
     body_2 = {"message": "You have successfully deleted the teacher with the following ID: TC"}
-    response = TeacherModel_create_for_factory.parse_obj(body)
+    response = TeacherModel_create_for_response.parse_obj(body)
     print(response)
     pass
