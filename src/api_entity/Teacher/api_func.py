@@ -5,7 +5,7 @@ from src.http_func import send_post, send_put, send_get, send_delete
 from src.api_entity.Teacher.factory import TeacherFactory_create, TeacherFactory_update
 from src.api_entity.Teacher.model import TeacherModel_create_for_factory, TeacherModel_update_for_factory, \
     TeacherModel_create_for_response, TeacherModel_update_for_response, TeacherModel_get_for_response, \
-    TeacherModel_delete_for_response
+    TeacherModel_delete_for_response, TeacherModel_getItems_for_response
 from src.api_entity.Teacher.api_path import TeacherFullPath
 from src.api_entity.Teacher import entity_name
 
@@ -23,7 +23,7 @@ class TeacherApiFunc:
         return body, model
 
     @staticmethod
-    def get(teacher_id, **kwargs):  # аннотируем функцию (указываем возвращаемый тип)
+    def get(teacher_id, **kwargs):
         """Получаем teacher_body через get"""
         response = send_get(url=TeacherFullPath.get.value / teacher_id, **kwargs)  # в kwargs передаем headers
         assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
@@ -31,6 +31,17 @@ class TeacherApiFunc:
         body = get_response_body(response, err_msg=f"{entity_name}:get")
         # валидируем (создаем экземпляр модели)
         model = TeacherModel_get_for_response.parse_obj(body)
+        return body, model
+
+    @staticmethod
+    def getItems(**kwargs):
+        """Получаем teacher_body через getItems"""
+        response = send_get(url=TeacherFullPath.getItems.value, **kwargs)
+        assert response.status_code == 200, f"Wrong status_code {entity_name}:getItems"
+        # получаем body из ответа в виде словаря
+        body = get_response_body(response, err_msg=f"{entity_name}:get")
+        # валидируем (создаем экземпляр модели)
+        model = TeacherModel_getItems_for_response.parse_obj(body)
         return body, model
 
     @staticmethod
@@ -92,6 +103,10 @@ if __name__ == "__main__":
     assert teacher_factory_update.last_name == teacher_model_get_update.last_name, f"last_name фабрики НЕ равно last_name модели для update"
     # у фабрики update НЕТ поля email_address (так как его изменять нельзя)
     assert teacher_factory_create.email_address == teacher_model_get_update.email_address, f"email_address фабрики НЕ равно email_address модели для update"
+
+    # teachers, teachers_model = TeacherApiFunc.getItems(headers=auth)
+    # print(teachers)
+
     # DELETE
     # Удаляем созданного учителя
     TeacherApiFunc.delete(teacher_id=teacher_id_create, headers=auth)
