@@ -59,12 +59,15 @@ class StudentModel_create_for_response(BaseModel):
     @validator('major', pre=True)
     def major_check(cls, v):
         assert v != {}, "Словарь major пуст"
-        try:
-            # body = v["teacher"]
-            # TeacherModel_create_for_response.parse_obj(body)
-            SubjectModel_create_for_response.parse_obj(v)
-        except ValueError as e:
-            raise ValueError(f"Error in func StudentModel_create_for_factory:major_id for teacher") from e
+        if v["subject_id"] is None:
+            print("Major subject for student was deleted")
+        else:
+            try:
+                # body = v["teacher"]
+                # TeacherModel_create_for_response.parse_obj(body)
+                SubjectModel_create_for_response.parse_obj(v)
+            except ValueError as e:
+                raise ValueError(f"Error in func StudentModel_create_for_response:major_id for teacher") from e
         return v
 
     @validator('minors')
@@ -74,13 +77,15 @@ class StudentModel_create_for_response(BaseModel):
                 try:
                     SubjectModel_create_for_response.parse_obj(v[0])
                 except ValueError as e:
-                    raise ValueError(f"Error in func StudentModel_create_for_factory:minors for teacher") from e
+                    raise ValueError(
+                        f"Error in func StudentModel_create_for_response:minors for teacher, len(minors) == 1") from e
             else:
                 for _dict in v:
                     try:
                         SubjectModel_create_for_response.parse_obj(_dict)
                     except ValueError as e:
-                        raise ValueError(f"Error in func StudentModel_create_for_factory:minors for teacher") from e
+                        raise ValueError(
+                            f"Error in func StudentModel_create_for_response:minors for teacher, len(minors) > 1") from e
         else:
             print(f"{v} список с минорными предметами пуст")
         return v
@@ -135,6 +140,19 @@ class StudentModel_get_for_response(StudentModel_create_for_response):
     pass
 
 
+class StudentModel_getItems_for_response(BaseModel):
+    students: list = Field(..., description="список учителей")
+
+    @validator("students")
+    def students_check(cls, v: list):
+        for _dict in v:
+            try:
+                StudentModel_get_for_response.parse_obj(_dict)
+            except ValueError as e:
+                raise ValueError(f"Error in func StudentModel_getItems_for_response:students for student") from e
+        return v
+
+
 class StudentModel_delete_for_response(BaseModel):
     """Модель удаления для ответа"""
     message: str = Field(description="сообщение об успехе удаления")
@@ -152,7 +170,7 @@ if __name__ == "__main__":
         "last_name": "student_last_name_5",
         "email_address": "student_5@mail.ru",
         "major": {
-            "subject_id": "SB94",
+            "subject_id": None,
             "name": "География",
             "description": "",
             "teacher": {
@@ -191,4 +209,47 @@ if __name__ == "__main__":
     print(student_1)
     body_2 = {"message": "You have successfully deleted the student with the following ID: ST793"}
     del_student = StudentModel_delete_for_response.parse_obj(body_2)
+    body_3 = {
+        "students": [
+            {
+                "student_id": "ST319",
+                "first_name": "student_name_1_update",
+                "last_name": "student_last_name_1_update",
+                "email_address": "student_1@mail.ru",
+                "major": {
+                    "subject_id": "SB1",
+                    "name": "None",
+                    "description": "None",
+                    "teacher": {
+                        "staff_id": "TC1",
+                        "first_name": "None",
+                        "last_name": "None",
+                        "email_address": "post_2@mail.ru",
+                        "created_at": "None",
+                        "updated_at": "None"
+                    },
+                },
+                "minors": []
+            },
+            {
+                "student_id": "ST997",
+                "first_name": "student_name_2_update",
+                "last_name": "student_last_name_2_update",
+                "email_address": "student_2@mail.ru",
+                "major": {
+                    "subject_id": "SB1",
+                    "name": "None",
+                    "description": "None",
+                    "teacher": {
+                        "staff_id": "TC2",
+                        "first_name": "None",
+                        "last_name": "None",
+                        "email_address": "post_2@mail.ru",
+                        "created_at": "None",
+                        "updated_at": "None"
+                    },
+                },
+                "minors": []
+            }]}
+    getItems_student = StudentModel_getItems_for_response.parse_obj(body_3)
     pass

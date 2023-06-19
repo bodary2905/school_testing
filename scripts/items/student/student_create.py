@@ -32,7 +32,7 @@ with open("../user/json_files/tokens.json", "r") as file:
     auth = {"Authorization": token}
     # открываем json-файл со  студентами
     with open("json_files/students.json", "r") as file2:
-        # получаем словарь с токенами
+        # получаем словарь со студентами
         students = json.load(file2)
         # через цикл for создаем студентов
         for student in students.values():

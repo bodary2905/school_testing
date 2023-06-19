@@ -33,6 +33,17 @@ class StudentApiFunc:
         model = StudentModel_get_for_response.parse_obj(body)
         return body, model
 
+    # @staticmethod
+    # def getItens(s**kwargs):  # аннотируем функцию (указываем возвращаемый тип)
+    #     """Получаем student_body через get"""
+    #     response = send_get(url=StudentFullPath.get.value / student_id, **kwargs)  # в kwargs передаем headers
+    #     assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
+    #     # получаем body из ответа в виде словаря
+    #     body = get_response_body(response, err_msg=f"{entity_name}:get")
+    #     # валидируем (создаем экземпляр модели)
+    #     model = StudentModel_get_for_response.parse_obj(body)
+    #     return body, model
+
     @staticmethod
     def update(student_id, body, **kwargs):
         response = send_put(url=StudentFullPath.put.value / student_id, json=body, **kwargs)

@@ -33,10 +33,13 @@ class SubjectModel_create_for_response(BaseModel):
     @validator('teacher')
     def teacher_is_dict(cls, v):
         assert v != {}, "Словарь teacher пуст"
-        try:
-            TeacherModel_create_for_response.parse_obj(v)
-        except ValueError as e:
-            raise ValueError(f"Error in func SubjectModel_create_for_response:teacher dict") from e
+        if v["staff_id"] is None:
+            print(f"Teacher for subject was deleted")
+        else:
+            try:
+                TeacherModel_create_for_response.parse_obj(v)
+            except ValueError as e:
+                raise ValueError(f"Error in func SubjectModel_create_for_response:teacher dict") from e
         return v
 
     @validator("subject_id")
@@ -67,6 +70,19 @@ class SubjectModel_get_for_response(SubjectModel_create_for_response):
     pass
 
 
+class SubjectModel_getItems_for_response(BaseModel):
+    subjects: list = Field(..., description="список предметов")
+
+    @validator("subjects")
+    def subjects_check(cls, v: list):
+        for _dict in v:
+            try:
+                SubjectModel_get_for_response.parse_obj(_dict)
+            except ValueError as e:
+                raise ValueError(f"Error in func StudentModel_getItems_for_response:subject for subjects") from e
+        return v
+
+
 class SubjectModel_delete_for_response(BaseModel):
     """Модель удаления для ответа"""
     message: str = Field(description="сообщение об успехе удаления")
@@ -83,7 +99,7 @@ if __name__ == "__main__":
         "name": "Литература_upd",
         "description": "new",
         "teacher": {
-            "staff_id": "TC898",
+            "staff_id": None,
             "first_name": "teacher_name_02",
             "last_name": "teacher_last_name_2",
             "email_address": "teacher_2@mail.ru"
@@ -91,4 +107,29 @@ if __name__ == "__main__":
     }
     body_2 = {"message": "You have successfully deleted the subject with the following ID: SB491"}
     subject_1 = SubjectModel_create_for_response.parse_obj(body)
+    body_3 = {
+        "subjects": [
+            {
+                "subject_id": "SB491",
+                "name": "Литература",
+                "description": "",
+                "teacher": {
+                    "staff_id": "TC755",
+                    "first_name": "teacher_name_1",
+                    "last_name": "teacher_last_name_1",
+                    "email_address": "teacher_1@mail.ru",
+                    "created_at": "Sun, 04 Jun 2023 14:16:03 -0000",
+                    "updated_at": None
+                },
+                "created_at": "Sun, 04 Jun 2023 14:16:07 -0000",
+                "updated_at": None
+            }
+        ],
+        "has_next": False,
+        "page_count": 1,
+        "previous_page": "None",
+        "next_page": "None"
+    }
+    getItems_subject = SubjectModel_getItems_for_response.parse_obj(body_3)
+    print(getItems_subject)
     pass
