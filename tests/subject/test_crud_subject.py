@@ -18,6 +18,7 @@ from tests.config import user1_credential
 @pytest.mark.crud
 @pytest.mark.teacher
 def test_crud_subject(user1_auth_hearders):
+    """Тест CRUD для предмета"""
     # Достаем словарь и модель с учителями
     teachers, teachers_model = TeacherApiFunc.getItems(headers=user1_auth_hearders)
     # достаем список учителей из словаря teachers
