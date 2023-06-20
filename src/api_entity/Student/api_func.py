@@ -125,5 +125,5 @@ if __name__ == "__main__":
     StudentApiFunc.delete(student_id=student_id_create, headers=auth)
     # Проверяем, что удаленный студент отсутствует через send_get
     response = send_get(url=StudentFullPath.get.value / student_id_create, headers=auth)  # в kwargs передаем headers
-    assert response.status_code == 404, f"Wrong status_code {entity_name}:get"
+    assert response.status_code == 404, f"Wrong status_code {entity_name}:send_get after delete"
     pass
