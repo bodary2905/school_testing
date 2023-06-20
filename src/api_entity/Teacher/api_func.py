@@ -112,5 +112,5 @@ if __name__ == "__main__":
     TeacherApiFunc.delete(teacher_id=teacher_id_create, headers=auth)
     # Проверяем, что удаленный учитель отсутствует через send_get
     response = send_get(url=TeacherFullPath.get.value / teacher_id_create, headers=auth)  # в kwargs передаем headers
-    assert response.status_code == 404, f"Wrong status_code {entity_name}:get"
+    assert response.status_code == 404, f"Wrong status_code {entity_name}:send_get after delete"
     pass
