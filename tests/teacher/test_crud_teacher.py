@@ -16,6 +16,7 @@ from tests.config import user1_credential
 @pytest.mark.crud
 @pytest.mark.teacher
 def test_crud_teaher(user1_auth_hearders):
+    """Тест CRUD для учителя"""
     # CREATE
     # создаем учителя с помощью фабрики (экземпляр модели фабрики)
     teacher_factory_create = TeacherFactory_create.build()
