@@ -37,7 +37,7 @@ def test_crud_subject(user1_auth_hearders):
     # получаем id-к предмета через модель
     subject_id_create = subject_model_create.subject_id  # или через словарь student_create["student_id"]
     # получаем созданный предмет с помощью api_func через метод get
-    student_get_create, subject_model_get_create = SubjectApiFunc.get(subject_id=subject_id_create,
+    subject_get_create, subject_model_get_create = SubjectApiFunc.get(subject_id=subject_id_create,
                                                                       headers=user1_auth_hearders)  # get возвращает body и model
     # сравниваем значения, отправленные на сервер с полученными значениями (фабрику и модель)
     assert subject_factory_create.name == subject_model_get_create.name, f"name фабрики НЕ равно name модели для create"
