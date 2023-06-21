@@ -21,7 +21,7 @@ from tests.config import user1_credential
 
 @pytest.mark.crud
 @pytest.mark.teacher
-def test_general_scenario(user1_auth_hearders):
+def test_rule_one_teacher(user1_auth_hearders):
     """На один предмет может быть назначен только один учитель"""
     # Создаем учителей
     # создаем учителей с помощью фабрики (экземпляр модели фабрики)
@@ -61,6 +61,6 @@ def test_general_scenario(user1_auth_hearders):
                                    headers=user1_auth_hearders)
     # проверяем, что статус код НЕ 200 + в ответе приходит ошибка
     # TODO подумать, что проверять лучше сам текст ошибки или только наличие ошибки error
-    assert subject_fail_update.status_code == 400, "Status code != 400 for update"
+    assert subject_fail_update.status_code == 400, "Status code != 400 for update subject with two teachers"
     assert "error" in subject_fail_update.text, f"No error when assigning two teachers to one subject for update"
     pass
