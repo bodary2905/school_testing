@@ -60,9 +60,9 @@ def test_rule_one_major_subject(user1_auth_hearders):
     assert student_fail_create.status_code == 400, "Status code != 400 for create student with two major subjects"
     # создаем студента с помощью фабрики (экземпляр модели фабрики)
     student_factory_update_fail = StudentFactory_update.build(major_id=f"{', '.join([subject_1_id, subject_2_id])}")
-    # Изменяем предмет: назначаем на предмет 2-х учителей
+    # Изменяем студента: назначаем ему два основных предмета
     student_fail_update = send_put(url=SubjectFullPath.put.value / student_id, json=student_factory_update_fail.dict(),
                                    headers=user1_auth_hearders)
-    # проверяем, что статус код НЕ 200 + в ответе приходит ошибка
+    # проверяем, что статус код НЕ 200
     assert student_fail_update.status_code == 404, "Status code != 400 for update student with two major subjects"
     pass
