@@ -40,18 +40,13 @@ def test_crud_student(user1_auth_hearders):
     # создаем студента с помощью api_func через метод create
     student_create1, student_model_create1 = StudentApiFunc.create(student_factory_create1.dict(),
                                                                    headers=user1_auth_hearders)  # create возвращает body и model
-    # получаем id-к студента через модель
-    student_id_create = student_model_create1.student_id
-    # создаем экземпляр модели фабрики для update для последующих тестов
     # вывбираем случайный id-к из списка с id-ми предметов
     major_id_upd = random.choice(subject_ids)
     # случайным образом формируем список из id-в предметов для дополнительных предметов
     list_minors_upd = random.sample(subject_ids, random.randint(0, len(subject_ids)))
     # переводим в строку список list_minors и записываем значение в дополнительные предметы
     minors_upd = ", ".join(map(str, list_minors_upd))
-    # создаем экземпляр модели фабрики для update
-    student_factory_update = StudentFactory_update.build(major_id=major_id_upd, minors=minors_upd,
-                                                         headers=user1_auth_hearders)
+
     """Тест Email уникален"""
     # достаем email созданного студента
     email = student_model_create1.email_address
@@ -73,17 +68,20 @@ def test_crud_student(user1_auth_hearders):
     student_create2, student_model_create2 = StudentApiFunc.create(student_factory_create2.dict(),
                                                                    headers=user1_auth_hearders)
     # достаем id-к 2-го созданного студента
-    student_id = student_model_create2.student_id
+    student_id_2 = student_model_create2.student_id
     # создаем словарь со студентом и записываем в него существующий email
+    # student_fail_update = {
+    #     "first_name": "student_name_fail",
+    #     "last_name": "student_last_name_fail",
+    #     "email_address": email,
+    #     "major_id": major_id_upd,
+    #     "minors": minors_upd
+    # }
     student_fail_update = {
-        "first_name": "student_name_fail",
-        "last_name": "student_last_name_fail",
-        "email_address": email,
-        "major_id": major_id_upd,
-        "minors": minors_upd
+        "email_address": email
     }
-    # пытаемся изменить студента с emai уже существующем в системе
-    update_student_fail = send_put(url=StudentFullPath.put.value / student_id,
+    # пытаемся изменить студента с email уже существующем в системе
+    update_student_fail = send_put(url=StudentFullPath.put.value / student_id_2,
                                    json=student_fail_update, headers=user1_auth_hearders)
     # проверяем статус код
     assert update_student_fail.status_code == 400, "Unique email test for student_update not work"
