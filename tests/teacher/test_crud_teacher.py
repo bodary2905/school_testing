@@ -33,6 +33,13 @@ def test_crud_teaher(user1_auth_hearders):
     assert teacher_factory_create.first_name == teacher_model_get_create.first_name, f"first_name фабрики НЕ равно first_name модели для create"
     assert teacher_factory_create.last_name == teacher_model_get_create.last_name, f"last_name фабрики НЕ равно last_name модели для create"
     assert teacher_factory_create.email_address == teacher_model_get_create.email_address, f"email_address фабрики НЕ равно email_address модели для create"
+    # GETITEMS
+    # получаем предметы
+    teachers, teachers_model = TeacherApiFunc.getItems(headers=user1_auth_hearders, params={"limit": 100})
+    # проверяем, что созданный студент есть в списке по email и id-ку
+    assert any(
+        teacher["staff_id"] == teacher_model_get_create.staff_id for teacher in teachers["teachers"]), \
+        f"{teacher_model_get_create.teacher_id} not found in list with teachers"
     # UPDATE
     # создаем экземпляр модели фабрики для update
     teacher_factory_update = TeacherFactory_update.build()

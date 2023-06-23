@@ -62,6 +62,16 @@ def test_crud_student(user1_auth_hearders):
     minor_ids.sort()
     # сравниваем отправленные minors с полученными minors
     assert list_minors == minor_ids, f"отправленные минорные предемты {list_minors} НЕ равны полученным {minor_ids} для create"
+    # GETITEMS
+    # получаем студентов
+    students, students_model = StudentApiFunc.getItems(headers=user1_auth_hearders, params={"limit": 100})
+    # проверяем, что созданный студент есть в списке по email и id-ку
+    assert any(
+        student["email_address"] == student_factory_create.email_address for student in students["students"]), \
+        f"{student_factory_create.email_address} not found in list with students"
+    assert any(
+        student["student_id"] == student_model_get_create.student_id for student in students["students"]), \
+        f"{student_model_get_create.student_id} not found in list with students"
     # UPDATE
     # вывбираем случайный id-к из списка с id-ми предметов
     major_id_upd = random.choice(subject_ids)
