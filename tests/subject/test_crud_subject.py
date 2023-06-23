@@ -44,6 +44,13 @@ def test_crud_subject(user1_auth_hearders):
     assert subject_factory_create.description == subject_model_get_create.description, f"description фабрики НЕ равно description модели для create"
     assert subject_factory_create.teacher_id == subject_model_get_create.teacher[
         "staff_id"], f"teacher_id фабрики НЕ равно staff_id модели для create"
+    # GETITEMS
+    # получаем предметы
+    subjects, subjects_model = SubjectApiFunc.getItems(headers=user1_auth_hearders, params={"limit": 100})
+    # проверяем, что созданный студент есть в списке по email и id-ку
+    assert any(
+        subject["subject_id"] == subject_model_get_create.subject_id for subject in subjects["subjects"]), \
+        f"{subject_model_get_create.student_id} not found in list with subjects"
     # UPDATE
     # создаем экземпляр модели фабрики для update
     subject_factory_update = SubjectFactory_update.build(teacher_id=random.choice(staff_ids))
