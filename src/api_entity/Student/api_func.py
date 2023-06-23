@@ -5,7 +5,7 @@ from src.http_func import send_post, send_put, send_get, send_delete
 from src.api_entity.Student.factory import StudentFactory_create, StudentFactory_update
 from src.api_entity.Student.model import StudentModel_create_for_factory, StudentModel_update_for_factory, \
     StudentModel_create_for_response, StudentModel_update_for_response, StudentModel_get_for_response, \
-    StudentModel_delete_for_response
+    StudentModel_delete_for_response, StudentModel_getItems_for_response
 from src.api_entity.Student.api_path import StudentFullPath
 from src.api_entity.Student import entity_name
 
@@ -23,7 +23,7 @@ class StudentApiFunc:
         return body, model
 
     @staticmethod
-    def get(student_id, **kwargs):  # аннотируем функцию (указываем возвращаемый тип)
+    def get(student_id, **kwargs):
         """Получаем student_body через get"""
         response = send_get(url=StudentFullPath.get.value / student_id, **kwargs)  # в kwargs передаем headers
         assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
@@ -33,16 +33,16 @@ class StudentApiFunc:
         model = StudentModel_get_for_response.parse_obj(body)
         return body, model
 
-    # @staticmethod
-    # def getItens(s**kwargs):  # аннотируем функцию (указываем возвращаемый тип)
-    #     """Получаем student_body через get"""
-    #     response = send_get(url=StudentFullPath.get.value / student_id, **kwargs)  # в kwargs передаем headers
-    #     assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
-    #     # получаем body из ответа в виде словаря
-    #     body = get_response_body(response, err_msg=f"{entity_name}:get")
-    #     # валидируем (создаем экземпляр модели)
-    #     model = StudentModel_get_for_response.parse_obj(body)
-    #     return body, model
+    @staticmethod
+    def getItems(**kwargs):
+        """Получаем student_body через get"""
+        response = send_get(url=StudentFullPath.getItems.value, **kwargs)  # в kwargs передаем headers
+        assert response.status_code == 200, f"Wrong status_code {entity_name}:getItems"
+        # получаем body из ответа в виде словаря
+        body = get_response_body(response, err_msg=f"{entity_name}:getItems")
+        # валидируем (создаем экземпляр модели)
+        model = StudentModel_getItems_for_response.parse_obj(body)
+        return body, model
 
     @staticmethod
     def update(student_id, body, **kwargs):
@@ -69,6 +69,9 @@ if __name__ == "__main__":
 
     # получаем хэдер Authorization
     auth = get_auth_header_user1()
+    # CETITEMS
+    # students, students_model = StudentApiFunc.getItems(headers=auth)
+    # print(students)
     # CREATE
     # создаем студента с помощью фабрики (экземпляр модели фабрики)
     minor_id_1 = "SB134"

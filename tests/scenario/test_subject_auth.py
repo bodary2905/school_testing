@@ -38,7 +38,7 @@ def test_subject_auth(user1_auth_hearders):
     # создаем экземпляр модели фабрики для update для последующих тестов
     subject_factory_update = SubjectFactory_update.build(teacher_id=random.choice(staff_ids))
 
-    """Тест доступа CRUD учителя только для авторизованного пользователя"""
+    """Тест доступа CRUD предмета только для авторизованного пользователя"""
     # CREATE
     # пытаемся создать предмет неавторизованным пользователем
     create_subject_fail = send_post(url=SubjectFullPath.create, json=subject_factory_create.dict())
