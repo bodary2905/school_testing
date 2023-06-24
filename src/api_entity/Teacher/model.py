@@ -42,11 +42,13 @@ class TeacherModel_create_for_response(TeacherModel_create_for_factory):
         # 255 символов - ограничение по документации
         if len(v) > 255:
             raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
-        # от 130 до 255 проверяем email через регулярное выражение
-        # if len(v) > 129:
-        #     if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
-        #         # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
-        #         raise ValueError(f"Email is invalid")
+        # от 130 до 255 проверяем email через регулярное выражение,
+        # так как validate_email после собаки до точки считает валидным только 124 символа
+        # 5 символов = @+.+ru+одна буква из доменного имени до собаки (124 + 5 = 129)
+        if len(v) > 129:
+            if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
+                # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
+                raise ValueError(f"Email is invalid")
         # через библиотеку validate_email поверяем валидность email-адреса
         else:
             validate_email(v,
@@ -93,8 +95,7 @@ if __name__ == "__main__":
     body = {
         "first_name": "teacher_name_1",
         "last_name": "teacher_last_name_1",
-        "email_address": "post@mail.ru",
-        "staff_id": "TC123"
+        "email_address": "oJA9AUGxn29pUi2yqc0eXCXiSYx57jYkIrPPQf0toOb8PVChtqWsXzNhdcnZG1Xf@xcPauKinGIdhiWsrlT92CjdWXmZGQ2QsMpkjVBxqH3KmOE5da2MqyPKgn2ml7Bf.ru"
     }
     body_2 = {"message": "You have successfully deleted the teacher with the following ID: TC"}
     body_3 = {
@@ -141,6 +142,5 @@ if __name__ == "__main__":
             }
         ]
     }
-    response = TeacherModel_getItems_for_response.parse_obj(body_3)
-    print(response)
+    response = TeacherModel_create_for_factory.parse_obj(body)
     pass

@@ -16,7 +16,7 @@ from tests.config import user1_credential
 
 
 @pytest.mark.crud
-@pytest.mark.teacher
+@pytest.mark.student
 def test_crud_student(user1_auth_hearders):
     """Тест CRUD для студента"""
     # получаем существующие предметы в виде словаря и модели

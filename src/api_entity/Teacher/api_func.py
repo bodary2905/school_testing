@@ -16,7 +16,9 @@ class TeacherApiFunc:
         """Создаем Teacher"""
         _body = teacher_dict
         response = send_post(url=TeacherFullPath.create, json=_body, **kwargs)
-        assert response.status_code == 201, f"Wrong status code {entity_name}: create"
+        assert response.status_code == 201, f"Wrong status code {entity_name}: create\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:create")
         # валидируем (создаем экземпляр модели)
         model = TeacherModel_create_for_response.parse_obj(body)
@@ -26,7 +28,9 @@ class TeacherApiFunc:
     def get(teacher_id, **kwargs):
         """Получаем teacher_body через get"""
         response = send_get(url=TeacherFullPath.get.value / teacher_id, **kwargs)  # в kwargs передаем headers
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: get\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         # получаем body из ответа в виде словаря
         body = get_response_body(response, err_msg=f"{entity_name}:get")
         # валидируем (создаем экземпляр модели)
@@ -37,7 +41,9 @@ class TeacherApiFunc:
     def getItems(**kwargs):
         """Получаем teacher_body через getItems"""
         response = send_get(url=TeacherFullPath.getItems.value, **kwargs)
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:getItems"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: getItems\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         # получаем body из ответа в виде словаря
         body = get_response_body(response, err_msg=f"{entity_name}:get")
         # валидируем (создаем экземпляр модели)
@@ -47,7 +53,9 @@ class TeacherApiFunc:
     @staticmethod
     def update(teacher_id, body, **kwargs):
         response = send_put(url=TeacherFullPath.put.value / teacher_id, json=body, **kwargs)
-        assert response.status_code == 200, f"Wrong statuse_code {entity_name}:update"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: update\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:update")
         # валидируем (создаем экземпляр модели)
         model = TeacherModel_update_for_response.parse_obj(body)
@@ -56,7 +64,9 @@ class TeacherApiFunc:
     @staticmethod
     def delete(teacher_id, **kwargs):
         response = send_delete(url=TeacherFullPath.delete.value / teacher_id, **kwargs)
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:delete"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: delete\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:delete")
         # валидируем (создаем экземпляр модели)
         model = TeacherModel_delete_for_response.parse_obj(body)

@@ -16,7 +16,9 @@ class SubjectApiFunc:
         """Создаем Subject"""
         _body = subject_dict
         response = send_post(url=SubjectFullPath.create, json=_body, **kwargs)
-        assert response.status_code == 201, f"Wrong status code {entity_name}: create"
+        assert response.status_code == 201, f"Wrong status code {entity_name}: create\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:create")
         # валидируем (создаем экземпляр модели)
         model = SubjectModel_create_for_response.parse_obj(body)
@@ -26,7 +28,9 @@ class SubjectApiFunc:
     def get(subject_id, **kwargs):  # аннотируем функцию (указываем возвращаемый тип)
         """Получаем subject_body через get"""
         response = send_get(url=SubjectFullPath.get.value / subject_id, **kwargs)  # в kwargs передаем headers
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:get"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: get\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         # получаем body из ответа в виде словаря
         body = get_response_body(response, err_msg=f"{entity_name}:get")
         # валидируем (создаем экземпляр модели)
@@ -37,7 +41,9 @@ class SubjectApiFunc:
     def getItems(**kwargs):
         """Получаем subject_body через getItems"""
         response = send_get(url=SubjectFullPath.getItems.value, **kwargs)  # в kwargs передаем headers
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:getItems"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: getItems\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         # получаем body из ответа в виде словаря
         body = get_response_body(response, err_msg=f"{entity_name}:getItems")
         # валидируем (создаем экземпляр модели)
@@ -47,7 +53,9 @@ class SubjectApiFunc:
     @staticmethod
     def update(subject_id, body, **kwargs):
         response = send_put(url=SubjectFullPath.put.value / subject_id, json=body, **kwargs)
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:update"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: update\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:update")
         # валидируем (создаем экземпляр модели)
         model = SubjectModel_update_for_response.parse_obj(body)
@@ -56,7 +64,9 @@ class SubjectApiFunc:
     @staticmethod
     def delete(subject_id, **kwargs):
         response = send_delete(url=SubjectFullPath.delete.value / subject_id, **kwargs)
-        assert response.status_code == 200, f"Wrong status_code {entity_name}:delete"
+        assert response.status_code == 200, f"Wrong status code {entity_name}: delete\n" \
+                                            f"Actual: {response.status_code}. Expected 201\n" \
+                                            f"Message: {response.text}"
         body = get_response_body(response, err_msg=f"{entity_name}:delete")
         # валидируем (создаем экземпляр модели)
         model = SubjectModel_delete_for_response.parse_obj(body)
