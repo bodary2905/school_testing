@@ -8,6 +8,7 @@ import typing
 from typing import Literal, Optional, ClassVar, Union, List, Dict
 from pydantic import Field, constr, Extra, validator, ValidationError, validate_arguments, EmailStr
 from email_validator import validate_email, EmailNotValidError
+import re
 
 from src.api_entity.model import BaseModel
 from src.api_entity.Teacher.model import TeacherModel_create_for_response
@@ -95,8 +96,16 @@ class StudentModel_create_for_response(BaseModel):
         # 255 символов - ограничение по документации
         if len(v) > 255:
             raise ValueError(f"Error in validate TeacherModel_create:email_address_check_len")
-        # через библиотеку validate_email поверяем валидность email-адреса
+
+        # от 130 до 255 проверяем email через регулярное выражение,
+        # так как validate_email после собаки до точки считает валидным только 124 символа
+        # 5 символов = @+.+ru+одна буква из доменного имени до собаки (124 + 5 = 129)
+        if len(v) > 129:
+            if not re.fullmatch(r'[\w.-]+@[\w-]+\.[\w.]+', v):
+                # re.fullmatch(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+', v)
+                raise ValueError(f"Email is invalid")
         else:
+            # через библиотеку validate_email поверяем валидность email-адреса
             validate_email(v,
                            check_deliverability=False)  # check_deliverability: флаг, указывающий, нужно ли проверять возможность доставки email-сообщений на указанный адрес
         return v
@@ -168,7 +177,7 @@ if __name__ == "__main__":
         "student_id": "ST123",
         "first_name": "student_name_5",
         "last_name": "student_last_name_5",
-        "email_address": "student_5@mail.ru",
+        "email_address": "ujwH3aTHcJjXkXPds2KNDrQq6n2PvDrj8S8FXxUtFUfnZO6cmoLn8jJDOjaPkbIx@JrjJ0DS0vgtFXrheB8rw3fcsRhQ636oEzs2FUJmNMTmOSlA8JYbdXBxlHBC8FNpDD2GXUuIYmwibXMP6tBZZw9CiW5dLISut8fvnCRzUICWmetMEEjpv783Lbcgb25LS0ikSMEPHHgM91cjJR29NyRwIgtLXa4TozSimegn0OkIxgneyhCtg9rrSVbD.ru",
         "major": {
             "subject_id": None,
             "name": "География",
