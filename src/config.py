@@ -12,9 +12,8 @@ from src.const import EnvName
 
 # находим путь абсолютный путь до src
 # относительный путь работает нестабильно - если запускать скрипты из разных файлов
-curr_dir = os.path.dirname(__file__)  # путь до текущего файла /home/pcuser/PycharmProjects/school_testing/src
-src_path = os.path.join(curr_dir,
-                        '..')  # перемещяемся вверх на одну папку /home/pcuser/PycharmProjects/school_testing/src/..
+curr_dir = os.path.dirname(__file__)
+src_path = os.path.join(curr_dir, '..')
 
 # в зависимости от окружения загружаем нужный нам файл с .env
 # по умолчанию загружаем окружение "development"
@@ -22,9 +21,8 @@ _ENVIRONMENT_NAME = os.getenv("ENVIRONMENT_NAME") or "development"
 load_dotenv(f"{src_path}/env_folder/{_ENVIRONMENT_NAME}/.env")
 
 # -------- SET VARIABLES from ENV ----------
-# создание объекта URL
-# в API_URL лежит http://127.0.0.1:5000/api
-base_url = URL(os.getenv(EnvName.API_URL))  # BASE_URL - основной URL сервиса, EnvName.API_URL = "API_URL"
+# BASE_URL - основной URL сервиса
+base_url = URL(os.getenv(EnvName.API_URL))
 
 if __name__ == "__main__":
     # для теста

@@ -28,23 +28,19 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
     return connection
 
 
-# Создадим функцию, которая возвращает результат запроса
 def execute_read_query(connection, query):
     """Послылаем SQL запрос и ждем ответ от БД"""
     try:
         with connection:
-            with connection.cursor() as cursor:  # cursor - класс для взаимодействия с бд
-                # С помощью метода execute объекта cursor
-                # можно выполнить любую операцию или запрос к базе данных
+            with connection.cursor() as cursor:
                 cursor.execute(query)
-                result = cursor.fetchall()  # получаем результат запроса с помощью fetchall()
+                result = cursor.fetchall()
                 return result
     except Exception as e:
         # TODO подумать нужно ли пробрасывать ошибку дальше
         print(f"The error '{e}' occurred")
 
 
-# Создадим функцию БЕЗ возвращения результата запроса
 def execute_query(connection, query):
     """Послылаем SQL запрос и НЕ ждем ответ от БД"""
     try:
