@@ -29,7 +29,7 @@ class UserApiFunc:
         response = send_post(url=UserFullPath.login, json=body)
         assert response.status_code == 200, f"Wrong status_code on {entity_name}:login"
         body = get_response_body(response, err_msg=f"{entity_name}:loginWithoutCaptcha")
-        # получаем umt_token
+        # получаем token
         token = dpath.get(body, _UserBodyPath.token, separator='.')
         # пока просто проверяем что token - ненулевая строка
         assert isinstance(token, str) and \

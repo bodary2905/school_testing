@@ -4,8 +4,6 @@
 # TODO перенести этот файл в tests
 import os
 from yarl import URL
-# dotenv - это небольшой пакет, который считывает пары ключ-значение из файла .env,
-# и загружает необходимые вашему приложению переменные окружения
 from dotenv import load_dotenv
 
 from src.const import EnvName
