@@ -75,7 +75,7 @@ def test_limit_student(user1_auth_hearders, limit_create, limit_update):
     # DELETE
     # Удаляем созданного студента
     StudentApiFunc.delete(student_id=student_id_create, headers=user1_auth_hearders)
-    # Проверяем, что удаленный студент отсутствует через
+    # проверяем, что удаленный студент отсутствует через
     response = send_get(url=StudentFullPath.get.value / student_id_create,
                         headers=user1_auth_hearders)
     assert response.status_code == 404, f"Wrong status_code {entity_name}:send_get after delete"

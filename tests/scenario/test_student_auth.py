@@ -29,7 +29,7 @@ def test_student_auth(user1_auth_hearders):
     for subject in list_subjects:
         subject_ids.append(subject["subject_id"])
     # CREATE
-    # вывбираем случайный id-к из списка с id-ми предметов
+    # выбираем случайный id-к из списка с id-ми предметов
     major_id = random.choice(subject_ids)
     # случайным образом формируем список из id-в предметов для дополнительных предметов
     list_minors = random.sample(subject_ids, random.randint(0, len(subject_ids)))
@@ -43,7 +43,7 @@ def test_student_auth(user1_auth_hearders):
     # получаем id-к студента через модель
     student_id_create = student_model_create.student_id
     # создаем экземпляр модели фабрики для update для последующих тестов
-    # вывбираем случайный id-к из списка с id-ми предметов
+    # выбираем случайный id-к из списка с id-ми предметов
     major_id_upd = random.choice(subject_ids)
     # случайным образом формируем список из id-в предметов для дополнительных предметов
     list_minors_upd = random.sample(subject_ids, random.randint(0, len(subject_ids)))

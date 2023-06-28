@@ -22,7 +22,7 @@ from tests.config import user1_credential
 @pytest.mark.teacher
 def test_general_scenario(user1_auth_hearders):
     """Тест общего сценария"""
-    # Создаем учителя
+    # создаём учителя
     # создаем учителя с помощью фабрики (экземпляр модели фабрики)
     teacher_factory_create = TeacherFactory_create.build()
     # создаем учителя с помощью api_func через метод create
@@ -30,8 +30,8 @@ def test_general_scenario(user1_auth_hearders):
                                                                  headers=user1_auth_hearders)  # create возвращает body и model
     # получаем id-к созданного учителя через модель
     id_teacher = teacher_model_create.staff_id
-    # Создаем предметы
-    # Создаем мажорный и минорный предмет с помощью фабрики и назначаем на них учителя
+    # создаем предметы
+    # создаем мажорный и минорный предмет с помощью фабрики и назначаем на них учителя
     major_subject = SubjectFactory_create.build(teacher_id=id_teacher)
     minor_subject = SubjectFactory_create.build(teacher_id=id_teacher)
     # создаем мажорный и минорный предмет с помощью api_func через метод create
@@ -56,8 +56,8 @@ def test_general_scenario(user1_auth_hearders):
     # сравниваем отправленный id-к и полученный в предемете id-к учителя
     assert id_teacher == id_teacher_major, f"id teacher {id_teacher} not equal id teaher in major subject {id_teacher_major}"
     assert id_teacher == id_teacher_minor, f"id teacher {id_teacher} not equal id teaher in major subject {id_teacher_minor}"
-    # Создаем Студента
-    # Создаем студента с помощью фабрики и присваиваем ему созданные предметы
+    # создаем студента
+    # создаем студента с помощью фабрики и присваиваем ему созданные предметы
     student_factory_create = StudentFactory_create.build(major_id=id_major, minors=id_minor)
     # создаем студента с помощью api_func через метод create
     student_create, student_model_create = StudentApiFunc.create(student_factory_create.dict(),

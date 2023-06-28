@@ -109,9 +109,9 @@ def test_crud_student(user1_auth_hearders):
     # сравниваем отправленные minors с полученными minors
     assert list_minors_upd == minor_ids_upd, f"отправленные минорные предемты {list_minors_upd} НЕ равны полученным {minor_ids_upd} для update"
     # DELETE
-    # Удаляем созданного студента
+    # удаляем созданного студента
     StudentApiFunc.delete(student_id=student_id_create, headers=user1_auth_hearders)
-    # Проверяем, что удаленный студент отсутствует через send_get (так как через StudentApiFunc get возвращается словарь
+    # проверяем, что удаленный студент отсутствует через send_get (так как через StudentApiFunc get возвращается словарь
     # и модель провалидированные через модель ответа для get-запроса со статус кодом 200, а НЕ 404)
     response = send_get(url=StudentFullPath.get.value / student_id_create,
                         headers=user1_auth_hearders)  # в kwargs передаем headers

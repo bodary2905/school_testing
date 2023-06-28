@@ -40,7 +40,7 @@ def test_crud_student(user1_auth_hearders):
     # создаем студента с помощью api_func через метод create
     student_create1, student_model_create1 = StudentApiFunc.create(student_factory_create1.dict(),
                                                                    headers=user1_auth_hearders)  # create возвращает body и model
-    # вывбираем случайный id-к из списка с id-ми предметов
+    # выбираем случайный id-к из списка с id-ми предметов
     major_id_upd = random.choice(subject_ids)
     # случайным образом формируем список из id-в предметов для дополнительных предметов
     list_minors_upd = random.sample(subject_ids, random.randint(0, len(subject_ids)))

@@ -23,15 +23,15 @@ from tests.config import user1_credential
 @pytest.mark.teacher
 def test_rule_one_major_subject(user1_auth_hearders):
     """У студента может быть только один основной предмет"""
-    # Создаем учителя
+    # создаем учителя
     # создаем учителей с помощью фабрики (экземпляр модели фабрики)
     teacher_factory_create = TeacherFactory_create.build()
     # создаем учителей с помощью api_func через метод create
     teacher_create, teacher_model_create = TeacherApiFunc.create(teacher_factory_create.dict(),
                                                                  headers=user1_auth_hearders)
     teacher_id = teacher_model_create.staff_id
-    # Создаем предметы
-    # Создаем предметы с помощью фабрики и назначаем на них учителя
+    # создаем предметы
+    # создаем предметы с помощью фабрики и назначаем на них учителя
     subject_1 = SubjectFactory_create.build(teacher_id=teacher_id)
     subject_2 = SubjectFactory_create.build(teacher_id=teacher_id)
     # создаем предметы с помощью api_func через метод create

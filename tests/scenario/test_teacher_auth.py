@@ -17,7 +17,7 @@ from tests.config import user1_credential
 @pytest.mark.teacher
 def test_teaher_auth(user1_auth_hearders):
     """Вспомогательные шаги для тестов"""
-    # Создаем учителя авторизованным пользователем для последующих тестов
+    # создаем учителя авторизованным пользователем для последующих тестов
     # создаем учителя с помощью фабрики (экземпляр модели фабрики)
     teacher_factory_create = TeacherFactory_create.build()
     # создаем учителя с помощью api_func через метод create
@@ -25,7 +25,7 @@ def test_teaher_auth(user1_auth_hearders):
                                                                  headers=user1_auth_hearders)
     # достаем id-к чителя
     teacher_id = teacher_model_create.staff_id
-    # Создаем экземпляр модели измененного учителя для последующих тестов
+    # создаем экземпляр модели измененного учителя для последующих тестов
     teacher_factory_update = TeacherFactory_update.build()
 
     """Тест доступа CRUD учителя только для авторизованного пользователя"""

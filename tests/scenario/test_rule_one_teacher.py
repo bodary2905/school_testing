@@ -23,7 +23,7 @@ from tests.config import user1_credential
 @pytest.mark.teacher
 def test_rule_one_teacher(user1_auth_hearders):
     """На один предмет может быть назначен только один учитель"""
-    # Создаем учителей
+    # создаем учителей
     # создаем учителей с помощью фабрики (экземпляр модели фабрики)
     teacher_factory_create_1 = TeacherFactory_create.build()
     teacher_factory_create_2 = TeacherFactory_create.build()

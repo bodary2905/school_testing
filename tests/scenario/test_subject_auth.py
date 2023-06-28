@@ -19,7 +19,7 @@ from tests.config import user1_credential
 @pytest.mark.teacher
 def test_subject_auth(user1_auth_hearders):
     """Вспомогательные шаги для теста"""
-    # Достаем словарь и модель с учителями
+    # достаем словарь и модель с учителями
     teachers, teachers_model = TeacherApiFunc.getItems(headers=user1_auth_hearders)
     # достаем список учителей из словаря teachers
     teachers_list = teachers["teachers"]
@@ -27,7 +27,7 @@ def test_subject_auth(user1_auth_hearders):
     staff_ids = []
     for teacher in teachers_list:
         staff_ids.append(teacher["staff_id"])
-    # Создаем предмет авторизованным пользователем для последующих тестов
+    # создаем предмет авторизованным пользователем для последующих тестов
     # создаем предмет с помощью фабрики (экземпляр модели фабрики)
     subject_factory_create = SubjectFactory_create.build(teacher_id=random.choice(staff_ids))
     # создаем предмет с помощью api_func через метод create
