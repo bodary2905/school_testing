@@ -8,8 +8,6 @@ from enum import Enum
 
 def _convert_body_to_json(kwargs):
     """Конвертируем body в json если нужно"""
-    # метод get возвращает значение по ключу
-    # isinstance проверяет принадлежность экземпляра к классу
     if kwargs.get("data") and isinstance(kwargs.get("data"), dict):
         kwargs["data"] = json.dumps(kwargs["data"])  # преобазуем объект в json-строку (по ключу "data")
 

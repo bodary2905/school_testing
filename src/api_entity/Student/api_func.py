@@ -134,9 +134,9 @@ if __name__ == "__main__":
     assert student_factory_update.major_id == student_model_get_update.major[
         "subject_id"], "major_id фабрики НЕ равно major модели для update"
     # DELETE
-    # Удаляем созданного студента
+    # удаляем созданного студента
     StudentApiFunc.delete(student_id=student_id_create, headers=auth)
-    # Проверяем, что удаленный студент отсутствует через send_get
+    # проверяем, что удаленный студент отсутствует через send_get
     response = send_get(url=StudentFullPath.get.value / student_id_create, headers=auth)  # в kwargs передаем headers
     assert response.status_code == 404, f"Wrong status_code {entity_name}:send_get after delete"
     pass

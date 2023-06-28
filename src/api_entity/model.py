@@ -16,7 +16,7 @@ class BaseModel(PydanticBaseModel):
 
 
 def union(source, destination):
-    """Вспомогательная функция для реализация опции exclude_optional"""
+    """Вспомогательная функция для реализации опции exclude_optional"""
     for key, value in source.items():
         if isinstance(value, dict):
             node = destination.setdefault(key, {})
