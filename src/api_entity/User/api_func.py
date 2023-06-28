@@ -9,19 +9,18 @@ from src.http_func import send_post, send_put, send_get
 from src.api_entity.User.api_path import UserFullPath
 from src.api_entity.User import entity_name
 
-# TODO все переделать
+
 class _UserBodyPath(StrEnum):
     """Константы с путями в body для User"""
     token = "token"
 
 
 class UserApiFunc:
-    # TODO ДОДЕЛАТЬ
     @staticmethod
     def register(body):
         """Регистрируем нового User"""
         response = send_post(url=UserFullPath.register, json=body)
-        assert response.status_code == 201, f"Wrong status_code on {UserApiFunc.register.__name__} " \
+        assert response.status_code == 200, f"Wrong status_code on {UserApiFunc.register.__name__} " \
                                             f"{entity_name}"
 
     @staticmethod
@@ -37,14 +36,14 @@ class UserApiFunc:
                len(token) > 0, f"{entity_name} UMT token broken or don't exist"
         return token
 
+
 if __name__ == "__main__":
     # для теста
 
     body = {
-        "username": "testuser_10",
-        "password": "testpassword_10"
+        "username": "testuser_1",
+        "password": "testpassword_1"
     }
-    user_1 = UserApiFunc.register(body)
-    token_1 = UserApiFunc.login(body)
+    user_1 = UserApiFunc.login(body)
     print(user_1)
-    print(token_1)
+    pass

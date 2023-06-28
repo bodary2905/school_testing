@@ -8,7 +8,7 @@ from dataclasses import dataclass
 @dataclass
 class UserCredential:
     """Учетные данные для пользователей с различными ролями"""
-    email: str
+    name: str
     password: str
     token: str = ""
 

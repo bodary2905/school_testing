@@ -8,10 +8,8 @@ from enum import Enum
 
 def _convert_body_to_json(kwargs):
     """Конвертируем body в json если нужно"""
-    # метод get возвращает значение по ключу
-    # isinstance проверяет принадлежность экземпляра к классу
     if kwargs.get("data") and isinstance(kwargs.get("data"), dict):
-        kwargs["data"] = json.dumps(kwargs["data"]) # преобазуем объект в json-строку (по ключу "data")
+        kwargs["data"] = json.dumps(kwargs["data"])  # преобазуем объект в json-строку (по ключу "data")
 
 
 def _convert_url_to_str(kwargs):
@@ -34,7 +32,6 @@ def _preprocess_kwargs(kwargs):
 
 def send_post(**kwargs):
     """Отправляем POST запрос"""
-    # kwargs["headers"] = {"Content-Type": "application/json"} | kwargs.get("headers", {})
     _preprocess_kwargs(kwargs)
     response = requests.post(**kwargs)
     return response
@@ -42,7 +39,6 @@ def send_post(**kwargs):
 
 def send_put(**kwargs):
     """Отправляем PUT запрос"""
-    # kwargs["headers"] = {"Content-Type": "application/json"} | kwargs.get("headers", {})
     _preprocess_kwargs(kwargs)
     response = requests.put(**kwargs)
     return response
